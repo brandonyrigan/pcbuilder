@@ -1,7 +1,5 @@
 # PC Builder
 
-Git Exercise #4
-
 ## Project Description
 
 A standalone Java program that allows a Guest Customer to custom build a personal PC from an existing 
