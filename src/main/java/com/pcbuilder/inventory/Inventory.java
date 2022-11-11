@@ -2,121 +2,36 @@ package com.pcbuilder.inventory;
 
 import java.util.*;
 
-public class Inventory {
-    private static Map<String, Collection<Component>> mapOfInventory;
+public final class Inventory {
+    public static Map<String, Collection<Component>> mapOfInventory = new HashMap<>();
+    //TODO: figure out singleton
 
-    public void addToInventory(Component component) {
-
+    public Inventory() {
+        setMapOfInventory(createMapOfInventory());
     }
 
-    public static void removeFromInventory() {
-
+    public Map<String, Collection<Component>> getMapOfInventory() {
+        return mapOfInventory;
     }
 
-    public static void findFromInventory() {
-
+    public void setMapOfInventory(Map<String, Collection<Component>> mapOfInventory) {
+        this.mapOfInventory = mapOfInventory;
     }
 
-    public static void calculateTotalItems() {
-
+    private Map<String, Collection<Component>> createMapOfInventory() {
+        mapOfInventory.put("CPU", cpuList);
+        mapOfInventory.put("Motherboard", motherboardList);
+        mapOfInventory.put("Memory", memoryList);
+        mapOfInventory.put("VideoCard", videoCardList);
+        mapOfInventory.put("Case", caseList);
+        mapOfInventory.put("PowerSupply", powerSupplyList);
+        mapOfInventory.put("Storage", storageList);
+        mapOfInventory.put("CPUCooler", cpuCoolerList);
+        return mapOfInventory;
     }
 
-    private static Collection<Component> cpuList = new ArrayList<>(List.of(
-            new CPU("Intel Core I7-13700K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I7-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13600K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7950X", "Ryzen 9", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7900X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7700X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7600X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 5 7600X", "Intel", 439.00, "*****", 20)
-    ));
 
-    private static Collection<Component> motherboardList = new ArrayList<>(List.of(
-            new CPU("Intel Core I7-13700K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I7-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13600K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7950X", "Ryzen 9", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7900X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7700X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7600X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 5 7600X", "Intel", 439.00, "*****", 20)
-    ));
-
-    private static Collection<Component> memoryList = new ArrayList<>(List.of(
-            new CPU("Intel Core I7-13700K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I7-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13600K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7950X", "Ryzen 9", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7900X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7700X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7600X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 5 7600X", "Intel", 439.00, "*****", 20)
-    ));
-
-    private static Collection<Component> videoCardList = new ArrayList<>(List.of(
-            new CPU("Intel Core I7-13700K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I7-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13600K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7950X", "Ryzen 9", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7900X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7700X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7600X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 5 7600X", "Intel", 439.00, "*****", 20)
-    ));
-
-    private static Collection<Component> powerSupplyList = new ArrayList<>(List.of(
-            new CPU("Intel Core I7-13700K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I7-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13600K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7950X", "Ryzen 9", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7900X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7700X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7600X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 5 7600X", "Intel", 439.00, "*****", 20)
-    ));
-
-    private static Collection<Component> storageList = new ArrayList<>(List.of(
-            new CPU("Intel Core I7-13700K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I7-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13600K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7950X", "Ryzen 9", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7900X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7700X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7600X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 5 7600X", "Intel", 439.00, "*****", 20)
-    ));
-
-    private static Collection<Component> cpuCoolerList = new ArrayList<>(List.of(
-            new CPU("Intel Core I7-13700K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I7-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13600K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7950X", "Ryzen 9", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7900X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7700X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7600X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 5 7600X", "Intel", 439.00, "*****", 20)
-    ));
-
-    private static Collection<Component> operatingSystemList = new ArrayList<>(List.of(
-            new CPU("Intel Core I7-13700K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I7-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13600K", "Intel", 439.00, "*****", 20),
-            new CPU("Intel Core I5-13700KF", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7950X", "Ryzen 9", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 9 7900X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7700X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 7 7600X", "Intel", 439.00, "*****", 20),
-            new CPU("AMD Ryzen 5 7600X", "Intel", 439.00, "*****", 20)
-    ));
-
+    private static Collection<Component> cpuList = new ArrayList<>();
     static {
         cpuList.add(new CPU("Intel Core I9-13900K", "24-Core, 3.0 GHz, 125W, Intel UHD Graphics 770", 659.00, "*****", 20));
         cpuList.add(new CPU("Intel Core I7-13700K", "16-Core, 3.4 GHz, DDR5 5600, 125W, Intel UHD Graphics 770", 439.99, "*****", 20));
