@@ -9,6 +9,7 @@ import com.pcbuilder.session.Session;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import com.pcbuilder.inventory.Inventory;
 
 public class Main {
 
