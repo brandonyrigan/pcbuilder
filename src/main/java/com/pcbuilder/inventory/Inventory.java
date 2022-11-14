@@ -3,35 +3,20 @@ package com.pcbuilder.inventory;
 import java.util.*;
 
 public final class Inventory {
+// TODO: implement singleton
+// TODO: Components should hava unique id
+
     public static Map<String, Collection<Component>> mapOfInventory = new HashMap<>();
-    //TODO: figure out singleton
 
-    public Inventory() {
-        setMapOfInventory(createMapOfInventory());
+    public static Collection< Component > fetchCategoryFromInventory(String targetCategory){
+//  TODO: use try catch block and optional
+        Collection<Component> targetList = mapOfInventory.get(targetCategory);
+        boolean foundTargetCategory = mapOfInventory.containsKey(targetCategory);
+
+        return ( foundTargetCategory )? targetList : null;
     }
 
-    public Map<String, Collection<Component>> getMapOfInventory() {
-        return mapOfInventory;
-    }
-
-    public void setMapOfInventory(Map<String, Collection<Component>> mapOfInventory) {
-        this.mapOfInventory = mapOfInventory;
-    }
-
-    private Map<String, Collection<Component>> createMapOfInventory() {
-        mapOfInventory.put("CPU", cpuList);
-        mapOfInventory.put("Motherboard", motherboardList);
-        mapOfInventory.put("Memory", memoryList);
-        mapOfInventory.put("VideoCard", videoCardList);
-        mapOfInventory.put("Case", caseList);
-        mapOfInventory.put("PowerSupply", powerSupplyList);
-        mapOfInventory.put("Storage", storageList);
-        mapOfInventory.put("CPUCooler", cpuCoolerList);
-        return mapOfInventory;
-    }
-
-
-    private static Collection<Component> cpuList = new ArrayList<>();
+    private static final Collection<Component> cpuList = new ArrayList<>();
     static {
         cpuList.add(new CPU("Intel Core I9-13900K", "24-Core, 3.0 GHz, 125W, Intel UHD Graphics 770", 659.00, "*****", 20));
         cpuList.add(new CPU("Intel Core I7-13700K", "16-Core, 3.4 GHz, DDR5 5600, 125W, Intel UHD Graphics 770", 439.99, "*****", 20));
@@ -125,6 +110,17 @@ public final class Inventory {
         cpuCoolerList.add(new CPUCooler("Corsair iCUE H60i RGB PRO XT", "120mm Radiator, Single 120mm PWM Fan, Software Control, Liquid CPU Cooler", 89.06, "*****", 20));
         cpuCoolerList.add(new CPUCooler("Corsair iCUE H115i", "Elite Capellix Liquid CPU Cooler", 158.39, "*****", 20));
         cpuCoolerList.add(new CPUCooler("Corsair iCUE H150i", "Elite Capellix Liquid CPU Cooler", 189.99, "*****", 20));
+    }
+
+    static {
+        mapOfInventory.put("CPU", cpuList);
+        mapOfInventory.put("Motherboard", motherboardList);
+        mapOfInventory.put("Memory", memoryList);
+        mapOfInventory.put("VideoCard", videoCardList);
+        mapOfInventory.put("Case", caseList);
+        mapOfInventory.put("PowerSupply", powerSupplyList);
+        mapOfInventory.put("Storage", storageList);
+        mapOfInventory.put("CPUCooler", cpuCoolerList);
     }
 
 }

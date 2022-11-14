@@ -9,17 +9,18 @@ inventory of PC Components.
 
     - Terminal/CommandLine: Guided Walk Through 
         
-            STEP 0 : ENTRY
+            STEP 0 : GREET AND PROCESS NEW CUSTOMER
                 - get customer info
                 - create new session for guest customer
                     - create new customer
                     - fetch current inventory
-                - DECIDE: display permanent walk through banner to customer
+            
+            STEP 1 : RENDER CURRENT BUILD
+                - display permanent walk through banner to customer
                     - shows current build
                     - DECIDE: shows current total price
-            
-            STEP 1 : PC COMPONENTS
-                - display permanent walk through banner to customer
+
+            STEP 2 : DISPLAY PC COMPONENT
                 - customer selects subsequent components
                     - display live inventoy list of current component
                         - Example: if component is a processor
