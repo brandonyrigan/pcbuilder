@@ -134,7 +134,7 @@ public class WalkThroughUI {
 //  TODO[ ]: keep customer in this menu until done selecting all components or return to main menu
 
         Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
-        Collection<Component> targetCollection = null;
+        Collection<Component> targetCollection;
 
         updateUserSelection();
         switch ( getSelection() ) {
@@ -193,7 +193,7 @@ public class WalkThroughUI {
         System.out.println(renderDashes);
 
         for(Component component: targetCollection){
-            holdComponentIds[ selectCounter ] = component.getName();
+            holdComponentIds[ selectCounter ] = component.getProductId().toString();
             System.out.format("%6s | %-53s | %-10s | %-10s | %-20s",
                     selectCounter, component.getName(), component.getPrice(),
                     component.getRating(), component.getDescription());
@@ -209,7 +209,7 @@ public class WalkThroughUI {
     public String customerComponentSelection( String... componentIds ){
 
         boolean chooseToEdit = true;
-        String targetID = "";
+        String targetID;
 
         do{
             System.out.print( "\nPlease, make your selection : ");
