@@ -21,7 +21,6 @@ public class Session {
     private Customer customer;
     private ShoppingCart shoppingCart;
     private Order order;
-
     public Map<String,String> sessionBuild;
 
     public Session( String[] customerInfo ) {

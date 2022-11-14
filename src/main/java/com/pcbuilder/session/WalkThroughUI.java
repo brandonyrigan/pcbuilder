@@ -11,7 +11,8 @@ public class WalkThroughUI {
 
 
     public WalkThroughUI() { renderMenu(); }
-    private void mainMenu(){
+    private void mainMenu(String... customerInfo){
+        System.out.println( " Customer:  " + customerInfo[1] + ", "+ customerInfo[0] );
         System.out.println(" MENU: " +
                         "  [1] PC Builder " +
                         "  [2] Shopping Cart " +
@@ -20,7 +21,7 @@ public class WalkThroughUI {
                         "  [5] Update Customer Information "
         );
     }
-    private void renderCurrentSessionBuild(Session session ){
+    private void renderCurrentSessionBuild( Session session ){
         System.out.println( " Current Build " + session.getSessionBuild() );
     }
 
@@ -34,7 +35,7 @@ public class WalkThroughUI {
         Session session = startCustomerSession(customerInfo);
 
         do{
-            mainMenu();
+            mainMenu(customerInfo);
             renderCurrentSessionBuild( session );
             updateUserSelection();
             switch ( selection ){
@@ -81,30 +82,37 @@ public class WalkThroughUI {
     private String[] processCustomerInformation(){
 //      TODO[]: allow user to go back and edit their entries
 //      TODO[x]: allow user to exit the App
-//      TODO[ ]: refactor to use confirmSelection data field
-
-        Scanner scanner = new Scanner(System.in);
+//      TODO[x]: refactor to use confirmSelection data field
 
         String[] customerInputValues = new String[3];
         String customerFirstName;
         String customerLastName;
         String customerEmail;
 
-        System.out.print("\nEnter your first name: ");
-        customerFirstName = scanner.next();
-        System.out.print("Value entered: " + customerFirstName.toUpperCase() + ", is this correct?  Yes/No");
+        boolean chooseToEdit = true;
 
-        System.out.print("\nEnter your last name: ");
-        customerLastName = scanner.next();
-        System.out.print("Value entered: " + customerLastName.toUpperCase() + ", is this correct? Yes/No");
+        do{
+            System.out.print("Enter your first name: ");
+            updateConfirmSelection();
+            customerFirstName = getConfirmSelection();
 
-        System.out.print("\nEnter your email: ");
-        customerEmail = scanner.next();
-        System.out.print("Value entered: " + customerEmail.toUpperCase() + ", is this correct? Yes/No" );
+            System.out.print("Enter your last name: ");
+            updateConfirmSelection();
+            customerLastName = getConfirmSelection();
 
-        System.out.println( "\nIs the following information correct? Yes/No" );
-        System.out.println( "name : " + customerLastName + "," + customerFirstName );
-        System.out.println( "email: " + customerEmail );
+            System.out.print("Enter your email: ");
+            updateConfirmSelection();
+            customerEmail = getConfirmSelection();
+
+            System.out.println( "\nYou entered " +
+                    "\n name: " + customerLastName+", "+customerFirstName +
+                    "\n email: " + customerEmail +
+                    "\ndid we get that right? Yes/No" );
+            updateConfirmSelection();
+            String editChoice = getConfirmSelection().toUpperCase().substring(0);
+            if( editChoice.equals("Y") ) chooseToEdit = false;
+        }
+        while( chooseToEdit );
 
         customerInputValues[0] = customerFirstName;
         customerInputValues[1] = customerLastName;
@@ -198,7 +206,7 @@ public class WalkThroughUI {
         session.updateSessionBuild( collectionName, componentUUID );
 
     }
-    public String customerComponentSelection(String... componentIds ){
+    public String customerComponentSelection( String... componentIds ){
 
         boolean chooseToEdit = true;
         String targetID = "";
@@ -222,7 +230,7 @@ public class WalkThroughUI {
     public int getSelection() { return selection; }
     public void setSelection(int selection) { this.selection = selection; }
     public String getConfirmSelection() { return confirmSelection; }
-    public void setConfirmSelection(String confirmSelection) { this.confirmSelection = confirmSelection;}
+    public void setConfirmSelection(String confirmSelection) { this.confirmSelection = confirmSelection; }
 
 
 }
