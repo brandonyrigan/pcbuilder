@@ -2,6 +2,8 @@ package com.pcbuilder.client;
 
 import com.pcbuilder.inventory.Component;
 import com.pcbuilder.session.Session;
+import com.pcbuilder.session.WalkThroughUI;
+
 import java.util.*;
 
 //DONE Step 0: Greet and Process Customer
@@ -25,7 +27,10 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) { runPCBuilderAPP(); }
+    public static void main(String[] args) {
+        new WalkThroughUI();
+//        runPCBuilderAPP();
+    }
 
     public static void runPCBuilderAPP(){
         String[] customerBasicInfo = welcomeTheCustomer();
@@ -36,7 +41,7 @@ public class Main {
     }
 
     public static String [] welcomeTheCustomer(){
-        String welcomeMessage = " Welcome to PC Builder where...";
+        String welcomeMessage = " Welcome to PC Builder where... ";
         System.out.println( welcomeMessage );
         String[] customerInputBasicInfo = captureCustomerInformation();
         return customerInputBasicInfo;
@@ -77,12 +82,17 @@ public class Main {
     public static Session startCustomerSession( String[] customerBasicInfo ){
         return new Session( customerBasicInfo );
     }
+
+
     private static HashMap<String, String> runPCBuilderWalkThrough( Session session ) {
         Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
         HashMap<String, String> currentSessionBuild = new HashMap<>();
 
         for ( Map.Entry<String, Collection<Component>> entry : fetchedInventoryMap.entrySet() ) {
-            renderTargetList( entry.getValue() ,currentSessionBuild, entry.getKey() );
+            renderTargetList(
+                    entry.getValue() ,
+                    currentSessionBuild,
+                    entry.getKey() );
         }
 
         renderCompletedSessionBuild( currentSessionBuild );
@@ -90,7 +100,11 @@ public class Main {
     }
 
 //    REFACTOR: Create new class WalkThroughUI ( runPCBuilderWalkThrough() )
-    public static void renderTargetList(Collection<Component> targetComponent,  HashMap<String, String> temporarySessionBuild , String keyName ){
+    public static void renderTargetList(
+            Collection<Component> targetComponent,
+            HashMap<String,String> temporarySessionBuild ,
+            String keyName )
+    {
 //  reference : https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html
 //        DONE[x]: render target category name
 //        TODO[ ]: generate dynamic table fields when rendering components
@@ -127,7 +141,8 @@ public class Main {
         addComponentToCurrentSessionBuild( selectedComponentInformation, temporarySessionBuild );
 
     };
-    public static String customerInputComponentSelection( String... componentIds ){
+    public static String customerInputComponentSelection( String... componentIds )
+    {
         Scanner scanner = new Scanner(System.in);
         String customerSelectionNumber = "";
         String targetID = "";
@@ -147,11 +162,15 @@ public class Main {
         }
         return targetID;
     }
-    public static String createComponentIdentifierInformation(String categoryName, String selectedComponentUUID ){
+    public static String createComponentIdentifierInformation(
+            String categoryName, String selectedComponentUUID )
+    {
 //  TODO[ ] - parse UUID from selectedComponent string value
         return categoryName +","+ selectedComponentUUID;
     }
-    public static void addComponentToCurrentSessionBuild( String componentToAdd, HashMap<String, String>  tempMapSessionBuild ){
+    public static void addComponentToCurrentSessionBuild(
+            String componentToAdd, HashMap<String, String>  tempMapSessionBuild )
+    {
 
         String[] catNameAndComponentId = componentToAdd.split(",");
         String categoryName = catNameAndComponentId[0];
@@ -160,7 +179,8 @@ public class Main {
         tempMapSessionBuild.put( categoryName, componentUUID );
 
     }
-    public static void renderCompletedSessionBuild(HashMap<String, String> mapOfCompletedBuild ){
+    public static void renderCompletedSessionBuild(HashMap<String, String> mapOfCompletedBuild )
+    {
         System.out.print( "Congratulations! Here is your PC Build : " +"\n" );
         for (Map.Entry<String, String> component : mapOfCompletedBuild.entrySet()) {
             System.out.println( component.getKey() + ": " + component.getValue() );

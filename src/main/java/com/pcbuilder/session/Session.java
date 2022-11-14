@@ -9,6 +9,7 @@ import com.pcbuilder.inventory.Inventory;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -21,9 +22,12 @@ public class Session {
     private ShoppingCart shoppingCart;
     private Order order;
 
+    public Map<String,String> sessionBuild;
+
     public Session( String[] customerInfo ) {
         setCustomer( customerInfo );
 //        setInventory( fetchInventory() );
+        setSessionBuild( new HashMap<>() );
         setShoppingCart( createNewShoppingCart() );
         setOrder( createNewOrder() );
         setUuid();
@@ -47,6 +51,10 @@ public class Session {
     public Map<String, Collection<Component>> fetchMapOfInventory(){
         Map<String, Collection<Component>> fetchedMapOfInventory = Inventory.mapOfInventory;
         return fetchedMapOfInventory;
+    }
+    public void updateSessionBuild( String categoryName, String componentUUID ){
+        Map<String, String> currentBuild = getSessionBuild();
+        currentBuild.put(categoryName, componentUUID);
     }
 
 
@@ -75,6 +83,10 @@ public class Session {
     public void setOrder(Order order) { this.order = null;}
     public ShoppingCart getShoppingCart() { return shoppingCart; }
     public void setShoppingCart(ShoppingCart shoppingCart) { this.shoppingCart = shoppingCart;}
-
-
+    public Map<String, String> getSessionBuild() {
+        return sessionBuild;
+    }
+    public void setSessionBuild(Map<String, String> sessionBuild) {
+        this.sessionBuild = sessionBuild;
+    }
 }
