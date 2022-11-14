@@ -20,10 +20,20 @@ import java.util.*;
 //DONE STEP 3: Render each Component Category and Save customers selection
 //  DONE[x] message customer of completed Build
 //  DONE[x] render current Build
-// TODO[ ] : Shopping cart
+// TODO[ ] : SHOPPING CART
 //      - TODO[ ] add Build to cart
 //      - TODO[ ] remove Build from cart
 //      - TODO[ ] view contents
+// TODO[ ] : ORDER
+//      - TODO[x] create new order
+//      - TODO[x] display order to customer
+//      - TODO[ ] display total price
+//      - TODO[ ] display total price after tax (?)
+//      - TODO[x] prompt customer to return to main menu
+//      - TODO[x] prompt customer to proceed to payment
+//      - TODO[x] prompt customer to confirm order
+// TODO[ ] : PAYMENT
+//      - TODO[ ] prompt customer to select payment type
 
 public class Main {
 

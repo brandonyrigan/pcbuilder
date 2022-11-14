@@ -28,7 +28,7 @@ public class Session {
 //        setInventory( fetchInventory() );
         setSessionBuild( new HashMap<>() );
         setShoppingCart( createNewShoppingCart() );
-        setOrder( createNewOrder() );
+        setOrder( null );
         setUuid();
         setSessionStartDate();
         setSessionEndDate();
@@ -39,10 +39,13 @@ public class Session {
 
 
 //  Helper Methods
-    public Order createNewOrder(){
-    Order newOrder = new Order();
-    return newOrder;
-}
+    public void createNewOrder(){
+        Customer sessionCustomer = getCustomer();
+        ShoppingCart sessionShoppingCart = getShoppingCart();
+        Map<String, String> sessionBuild = getSessionBuild();
+        Order newOrder = new Order( sessionCustomer, sessionShoppingCart, sessionBuild );
+        setOrder(newOrder);
+    }
     public ShoppingCart createNewShoppingCart(){
         ShoppingCart newShoppingCart = new ShoppingCart();
         return newShoppingCart;
@@ -79,7 +82,9 @@ public class Session {
         this.customer = guestCustomer;
     }
     public Order getOrder() { return order; }
-    public void setOrder(Order order) { this.order = null;}
+    public void setOrder(Order order) {
+        this.order = order;
+    }
     public ShoppingCart getShoppingCart() { return shoppingCart; }
     public void setShoppingCart(ShoppingCart shoppingCart) { this.shoppingCart = shoppingCart;}
     public Map<String, String> getSessionBuild() {
