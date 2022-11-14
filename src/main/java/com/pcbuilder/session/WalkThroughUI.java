@@ -151,7 +151,7 @@ public class WalkThroughUI {
                     renderComponentCategory(session, targetCollection, "CPUCooler");
                     break;
                 case 4:
-                    targetCollection = fetchedInventoryMap.get("MotherBoard");
+                    targetCollection = fetchedInventoryMap.get("Motherboard");
                     renderComponentCategory(session, targetCollection, "MotherBoard");
                     break;
                 case 5:

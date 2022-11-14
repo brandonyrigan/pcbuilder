@@ -1,5 +1,7 @@
 package com.pcbuilder.session;
 
+import com.pcbuilder.build.Build;
+import com.pcbuilder.build.BuildFactory;
 import com.pcbuilder.checkout.Order;
 import com.pcbuilder.checkout.ShoppingCart;
 import com.pcbuilder.customer.Customer;
@@ -36,7 +38,13 @@ public class Session {
 
 
 //  Business Logic
+    public Build composeBuild(Session sessionBuild) {
+        return BuildFactory.createBuild(sessionBuild);
+    }
 
+    public void addBuildToCart(Build finalBuild) {
+        //ShoppingCart.addPCBuildToCart(finalBuild);
+    }
 
 //  Helper Methods
     public Order createNewOrder(){
@@ -75,7 +83,7 @@ public class Session {
     }
     public Customer getCustomer() { return customer;}
     public void setCustomer(String... customerInfo) {
-        Customer guestCustomer = new Customer(customerInfo[0],customerInfo[1],customerInfo[2]);
+        Customer guestCustomer = new Customer(UUID.randomUUID(), customerInfo[0],customerInfo[1],customerInfo[2]);
         this.customer = guestCustomer;
     }
     public Order getOrder() { return order; }
