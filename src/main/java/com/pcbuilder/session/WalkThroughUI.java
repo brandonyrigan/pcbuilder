@@ -109,7 +109,7 @@ public class WalkThroughUI {
                     "\n email: " + customerEmail +
                     "\ndid we get that right? Yes/No" );
             updateConfirmSelection();
-            String editChoice = getConfirmSelection().toUpperCase();
+            String editChoice = getConfirmSelection().toUpperCase().substring(0);
             if( editChoice.equals("Y") ) chooseToEdit = false;
         }
         while( chooseToEdit );
@@ -217,7 +217,7 @@ public class WalkThroughUI {
             targetID = componentIds[getSelection()];
             System.out.println( "You entered " + " ["+getSelection()+"]" + ", did we get that right? Yes/No" );
             updateConfirmSelection();
-            String editChoice = getConfirmSelection().toUpperCase();
+            String editChoice = getConfirmSelection().toUpperCase().substring(0);
             if( editChoice.equals("Y") ) chooseToEdit = false;
         }
         while( chooseToEdit );
