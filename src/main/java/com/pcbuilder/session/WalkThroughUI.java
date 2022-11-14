@@ -12,12 +12,12 @@ public class WalkThroughUI {
 
     public WalkThroughUI() { renderMenu(); }
     private void mainMenu(){
-        System.out.println(" Menu: " +
-                        "[1] Update Customer Information " +
-                        "[1] PC Builder " +
-                        "[2] Shopping Cart " +
-                        "[3] View Order " +
-                        "[4]Purchase"
+        System.out.println(" MENU: " +
+                        "  [1] PC Builder " +
+                        "  [2] Shopping Cart " +
+                        "  [3] View Order " +
+                        "  [4] Purchase"+
+                        "  [5] Update Customer Information "
         );
     }
     private void renderCurrentSessionBuild(Session session ){
@@ -27,7 +27,7 @@ public class WalkThroughUI {
 
 //    Business Methods
     private void renderMenu(){
-//    TODO[ ]: stop user from re-rendering when inputs invalid menu selection not 1-4 or 0
+//    TODO[ ]: stop user from re-rendering when inputs invalid menu selection not 1-5 or 0
 
         welcomeTheCustomer();
         String[] customerInfo = processCustomerInformation();
@@ -37,25 +37,24 @@ public class WalkThroughUI {
             mainMenu();
             renderCurrentSessionBuild( session );
             updateUserSelection();
-
             switch ( selection ){
                 case 1:
-                    System.out.println( "Update Customer Information" );
-                    processCustomerInformation();
-                    break;
-                case 2:
                     System.out.println( "PC Builder WalkThrough" );
                     renderPCComponents( session );
                     runPCBuilderWalkThrough( session );
                     break;
-                case 3:
+                case 2:
                     System.out.println( "Shopping Cart" );
                     break;
-                case 4:
+                case 3:
                     System.out.println( "View Order" );
                     break;
-                case 5:
+                case 4:
                     System.out.println( "Purchase" );
+                    break;
+                case 5:
+                    System.out.println( "Update Customer Information" );
+                    processCustomerInformation();
                     break;
                 default: break;
             }
@@ -114,7 +113,7 @@ public class WalkThroughUI {
     }
     private void renderPCComponents(Session session){
         System.out.println("   Select which component you would like to view an inventory for");
-        System.out.println("   [0] Return to Main Menu " );
+        System.out.println("   [9] Return to Main Menu " );
 
         Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
         int index = 1;
@@ -122,7 +121,10 @@ public class WalkThroughUI {
             System.out.print( "   ["+ index++ +"] "+entry.getKey() );
         }
     }
-    private void runPCBuilderWalkThrough(Session session ) {
+    private void runPCBuilderWalkThrough(Session session ){
+
+//  TODO[ ]: keep customer in this menu until done selecting all components or return to main menu
+
         Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
         Collection<Component> targetCollection = null;
 
@@ -160,18 +162,22 @@ public class WalkThroughUI {
                     targetCollection = fetchedInventoryMap.get("Case");
                     renderComponentCategory(session, targetCollection, "Case");
                     break;
+                case 9:
+                    System.out.println();
+                    break;
                 default:
                     break;
             }
 
     }
-    private void renderComponentCategory(Session session, Collection<Component> targetCollection, String collectionName ){
+    private void renderComponentCategory(
+            Session session, Collection<Component> targetCollection, String collectionName ){
 
         String renderBar = "**********************************************";
         String renderDashes = "-------------------------------------------";
         int selectCounter = 1;
 
-        String[] holdComponentIds = new String[ targetCollection.size() ];
+        String[] holdComponentIds = new String[ targetCollection.size() +1 ];
 
         System.out.println( renderBar );
         System.out.printf("%-5s | %-53s | %-10s | %-10s | %-20s ", "SELECT", collectionName , "PRICE", "RATING", "DESCRIPTION");
@@ -192,7 +198,7 @@ public class WalkThroughUI {
         session.updateSessionBuild( collectionName, componentUUID );
 
     }
-    public String customerComponentSelection(String... componentIds ) {
+    public String customerComponentSelection(String... componentIds ){
 
         boolean chooseToEdit = true;
         String targetID = "";
