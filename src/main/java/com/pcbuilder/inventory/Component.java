@@ -1,18 +1,26 @@
 package com.pcbuilder.inventory;
 
+import java.util.UUID;
+
 public abstract class Component {
+    UUID productId;
     String name;
     String description;
     Double price;
     String rating;
     Integer inventoryCount;
 
-    public Component(String name, String description, Double price, String rating, Integer inventoryCount) {
+    public Component(UUID productId, String name, String description, Double price, String rating, Integer inventoryCount) {
+        this.productId = productId;
         this.name = name;
         this.description = description;
         this.price = price;
         this.rating = rating;
         this.inventoryCount = inventoryCount;
+    }
+
+    public UUID getProductId() {
+        return productId;
     }
 
     public String getName() {

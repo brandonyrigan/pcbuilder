@@ -207,7 +207,7 @@ private void renderMenu(){
         System.out.println(renderDashes);
 
         for(Component component: targetCollection){
-            holdComponentIds[ selectCounter ] = component.getName();
+            holdComponentIds[ selectCounter ] = component.getProductId().toString();
             System.out.format("%6s | %-53s | %-10s | %-10s | %-20s",
                     selectCounter, component.getName(), component.getPrice(),
                     component.getRating(), component.getDescription());
