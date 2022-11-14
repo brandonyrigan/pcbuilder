@@ -28,7 +28,7 @@ public class WalkThroughUI {
 
 //    Business Methods
     private void renderMenu(){
-//    TODO[ ]: stop user from re-rendering when inputs invalid menu selection not 1-5 or 0
+//    TODO[x]: stop user from re-rendering when inputs invalid menu selection not 1-5 or 0
 
         welcomeTheCustomer();
         String[] customerInfo = processCustomerInformation();
