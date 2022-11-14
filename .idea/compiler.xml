@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="pcbuilder" target="11" />
+      <module name="pcbuilder" target="9" />
     </bytecodeTargetLevel>
   </component>
 </project>
