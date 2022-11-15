@@ -33,7 +33,7 @@ import java.util.*;
 //      - TODO[x] prompt customer to proceed to payment
 //      - TODO[x] prompt customer to confirm order
 // TODO[ ] : PAYMENT
-//      - TODO[ ] prompt customer to select payment type
+//      - TODO[] prompt customer to select payment type
 
 public class Main {
 

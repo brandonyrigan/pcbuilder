@@ -1,5 +1,6 @@
 package com.pcbuilder.session;
 
+import com.pcbuilder.checkout.Checkout;
 import com.pcbuilder.checkout.Order;
 import com.pcbuilder.checkout.ShoppingCart;
 import com.pcbuilder.customer.Customer;
@@ -36,6 +37,13 @@ public class Session {
 
 
 //  Business Logic
+    public Checkout processOrder(){
+        System.out.println( "Gathering your order details... " );
+        System.out.println( "Beginning new checkout session... " );
+        System.out.println( "Processing your order details... " );
+        Checkout newCheckoutSession = new Checkout(getOrder());
+        return newCheckoutSession;
+    }
 
 
 //  Helper Methods
