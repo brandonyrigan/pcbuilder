@@ -8,21 +8,7 @@ import java.util.UUID;
 
 public class ShoppingCart {
     List<Build> cartItems = new ArrayList<Build>();
-//    public void addProduct(int uuid) {
-//        Build product = getBuild(uuid);
-//        addToCart(product);
-//    }
-//    private Build getProduct(int uuid) {
-//        Build product = null;
-//        List<Build> products = new Products().getProducts();
-//        for (Build prod: products) {
-//            if (prod.getuuid() == uuid) {
-//                product = prod;
-//                break;
-//            }
-//        }
-//        return product;
-//   }
+
     private void addToCart(Build built) {
         cartItems.add(built);
     }
