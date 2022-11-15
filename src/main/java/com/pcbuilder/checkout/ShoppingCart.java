@@ -1,12 +1,27 @@
 package com.pcbuilder.checkout;
 
-/**
- * Created by dev0 on 11/10/22.
- */
-public class ShoppingCart {
-    public ShoppingCart(){}
+import com.pcbuilder.build.Build;
 
-    public void shoppingCartMethod(){
-        System.out.println( "shopping cart method" );
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+public class ShoppingCart {
+    List<Build> cartItems = new ArrayList<Build>();
+
+    private void addToCart(Build built) {
+        cartItems.add(built);
+    }
+
+    public void removeFromCart(UUID builtId) {
+        for (Build built: cartItems) {
+            if (built.getBuildUUID() == builtId) {
+                cartItems.remove(builtId);
+            }
+        }
+
+    }
+    public void cartSize() {
+            System.out.println(cartItems.size());
     }
 }
