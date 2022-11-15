@@ -4,7 +4,6 @@ import com.pcbuilder.inventory.*;
 import com.pcbuilder.session.Session;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -26,22 +25,6 @@ public class BuildFactory {
         String customerName = sessionBuild.getCustomer().getFirstName() + " " + sessionBuild.getCustomer().getLastName();
 
         return new Build(buildUUID, customerUUID, customerName, cpu, cpuCooler, videoCard, motherboard, powerSupply, memory, storage, buildCase);
-    }
-
-    public static Map<String, Component> generateFinalMapOfBuild(Build build) {
-
-        Map<String, Component> finalMap = new HashMap<>();
-        {
-            finalMap.put("CPU", build.getCpu());
-            finalMap.put("CPUCooler", build.getCpuCooler());
-            finalMap.put("Case", build.getBuildCase());
-            finalMap.put("Memory", build.getMemory());
-            finalMap.put("Motherboard", build.getMotherboard());
-            finalMap.put("PowerSupply", build.getPowerSupply());
-            finalMap.put("Storage", build.getStorage());
-            finalMap.put("VideoCard", build.getVideoCard());
-        }
-        return finalMap;
     }
 
     private static Component findComponentByUUID(String componentType, Session session) {

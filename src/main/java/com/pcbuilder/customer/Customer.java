@@ -7,11 +7,16 @@ import java.util.UUID;
  */
 public class Customer {
     private UUID customerUUID;
-    private java.lang.String firstName;
-    private java.lang.String lastName;
-    private java.lang.String email;
+    private String firstName;
+    private String lastName;
+    private String email;
 
-    public Customer(UUID uuid, java.lang.String firstName, java.lang.String lastName, java.lang.String email ){}
+    public Customer(UUID uuid, String firstName, String lastName, String email ){
+        this.customerUUID = uuid;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
     public UUID getCustomerUUID() {
         return customerUUID;
@@ -21,27 +26,27 @@ public class Customer {
         this.customerUUID = UUID.randomUUID();
     }
 
-    public java.lang.String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(java.lang.String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public java.lang.String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(java.lang.String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public java.lang.String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(java.lang.String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 }

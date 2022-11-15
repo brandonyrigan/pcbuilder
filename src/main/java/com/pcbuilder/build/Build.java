@@ -7,7 +7,7 @@ import java.util.UUID;
 public class Build {
     private UUID buildUUID;
     private UUID guestCustomerId;
-    private java.lang.String guestCustomer;
+    private String guestCustomer;
     private CPU cpu;
     private CPUCooler cpuCooler;
     private VideoCard videoCard;
@@ -17,7 +17,7 @@ public class Build {
     private Storage storage;
     private Case buildCase;
 
-    public Build(UUID buildUUID, UUID guestCustomerId, java.lang.String guestCustomer, CPU cpu, CPUCooler cpuCooler, VideoCard videoCard, Motherboard motherboard, PowerSupply powerSupply, Memory memory, Storage storage, Case buildCase) {
+    public Build(UUID buildUUID, UUID guestCustomerId, String guestCustomer, CPU cpu, CPUCooler cpuCooler, VideoCard videoCard, Motherboard motherboard, PowerSupply powerSupply, Memory memory, Storage storage, Case buildCase) {
         this.buildUUID = buildUUID;
         this.guestCustomerId = guestCustomerId;
         this.guestCustomer = guestCustomer;

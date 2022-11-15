@@ -24,6 +24,7 @@ public class Session {
     private ShoppingCart shoppingCart;
     private Order order;
     public Map<String,String> sessionBuild;
+    public Build finalBuild;
 
     public Session( String[] customerInfo ) {
         setCustomer( customerInfo );
@@ -39,11 +40,13 @@ public class Session {
 
 //  Business Logic
     public Build composeBuild(Session sessionBuild) {
-        return BuildFactory.createBuild(sessionBuild);
+        finalBuild = BuildFactory.createBuild(sessionBuild);
+        return finalBuild;
     }
 
     public void addBuildToCart(Build finalBuild) {
         //ShoppingCart.addPCBuildToCart(finalBuild);
+        System.out.println("Build added to cart");
     }
 
 //  Helper Methods
@@ -86,7 +89,7 @@ public class Session {
     }
     public Customer getCustomer() { return customer;}
     public void setCustomer(String... customerInfo) {
-        Customer guestCustomer = new Customer(UUID.randomUUID(), customerInfo[0],customerInfo[1],customerInfo[2]);
+        Customer guestCustomer = new Customer(UUID.randomUUID(), customerInfo[0], customerInfo[1], customerInfo[2]);
         this.customer = guestCustomer;
     }
     public Order getOrder() { return order; }
