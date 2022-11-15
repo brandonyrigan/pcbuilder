@@ -8,31 +8,34 @@ import java.util.UUID;
 
 public class ShoppingCart {
     List<Build> cartItems = new ArrayList<Build>();
-    public void addProduct(int uuid) {
-        Build product = getProduct(uuid);
-        addToCart(product);
+//    public void addProduct(int uuid) {
+//        Build product = getBuild(uuid);
+//        addToCart(product);
+//    }
+//    private Build getProduct(int uuid) {
+//        Build product = null;
+//        List<Build> products = new Products().getProducts();
+//        for (Build prod: products) {
+//            if (prod.getuuid() == uuid) {
+//                product = prod;
+//                break;
+//            }
+//        }
+//        return product;
+//   }
+    private void addToCart(Build built) {
+        cartItems.add(built);
     }
-    private Build getProduct(int uuid) {
-        Build product = null;
-        List<Build> products = new Products().getProducts();
-        for (Build prod: products) {
-            if (prod.getuuid() == uuid) {
-                product = prod;
-                break;
+
+    public void removeFromCart(UUID builtId) {
+        for (Build built: cartItems) {
+            if (built.getBuildUUID() == builtId) {
+                cartItems.remove(builtId);
             }
         }
-        return product;
+
     }
-    private void addToCart(Build product) {
-        cartItems.add(product);
-    }
-    public void removeProduct(int uuid) {
-        Build prod = getProduct(uuid);
-        cartItems.remove(prod);
-    }
-    public void showCart() {
-        for (Build prod: cartItems) {
-            System.out.println(prod.getName());
-        }
+    public void cartSize() {
+            System.out.println(cartItems.size());
     }
 }
