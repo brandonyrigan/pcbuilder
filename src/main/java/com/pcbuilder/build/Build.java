@@ -1,14 +1,13 @@
 package com.pcbuilder.build;
 
-import com.pcbuilder.customer.Customer;
 import com.pcbuilder.inventory.*;
 
 import java.util.UUID;
 
 public class Build {
     private UUID buildUUID;
-    private UUID guestUserId;
-    private Customer guestCustomer;
+    private UUID guestCustomerId;
+    private String guestCustomer;
     private CPU cpu;
     private CPUCooler cpuCooler;
     private VideoCard videoCard;
@@ -18,9 +17,9 @@ public class Build {
     private Storage storage;
     private Case buildCase;
 
-    public Build(UUID buildUUID, UUID guestUserId, Customer guestCustomer, CPU cpu, CPUCooler cpuCooler, VideoCard videoCard, Motherboard motherboard, PowerSupply powerSupply, Memory memory, Storage storage, Case buildCase) {
+    public Build(UUID buildUUID, UUID guestCustomerId, String guestCustomer, CPU cpu, CPUCooler cpuCooler, VideoCard videoCard, Motherboard motherboard, PowerSupply powerSupply, Memory memory, Storage storage, Case buildCase) {
         this.buildUUID = buildUUID;
-        this.guestUserId = guestUserId;
+        this.guestCustomerId = guestCustomerId;
         this.guestCustomer = guestCustomer;
         this.cpu = cpu;
         this.cpuCooler = cpuCooler;
@@ -48,19 +47,19 @@ public class Build {
         this.buildUUID = buildUUID;
     }
 
-    public UUID getGuestUserId() {
-        return guestUserId;
+    public UUID getGuestCustomerId() {
+        return guestCustomerId;
     }
 
-    public void setGuestUserId(UUID guestUserId) {
-        this.guestUserId = guestUserId;
+    public void setGuestCustomerId(UUID guestCustomerId) {
+        this.guestCustomerId = guestCustomerId;
     }
 
-    public Customer getGuestCustomer() {
+    public String getGuestCustomer() {
         return guestCustomer;
     }
 
-    public void setGuestCustomer(Customer guestCustomer) {
+    public void setGuestCustomer(String guestCustomer) {
         this.guestCustomer = guestCustomer;
     }
 
