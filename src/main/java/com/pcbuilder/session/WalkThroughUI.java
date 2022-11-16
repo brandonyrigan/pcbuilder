@@ -2,6 +2,8 @@ package com.pcbuilder.session;
 
 import com.pcbuilder.build.Build;
 import com.pcbuilder.inventory.Component;
+
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class WalkThroughUI {
@@ -11,6 +13,7 @@ public class WalkThroughUI {
     private int selection;
     private String confirmSelection;
     private int componentCount;
+    private Map<String, Double> currentBuildPrices = new HashMap<>();
 
     public WalkThroughUI() { renderMenu(); }
 
@@ -76,6 +79,14 @@ private void renderMenu(){
         session.addBuildToCart(build);
         componentCount = 0;
     }
+    private String calculateCurrentTotalBuildPrice() {
+        Double total = 0.0;
+        DecimalFormat df = new DecimalFormat("#.##");
+        for (Map.Entry<String, Double> price : currentBuildPrices.entrySet()) {
+            total += price.getValue();
+        }
+        return df.format(total);
+    }
 
 // Main Menu
     private void mainMenu(String... customerInfo){
@@ -93,49 +104,54 @@ private void renderMenu(){
 
 //  TODO[ ]: keep customer in this menu until done selecting all components or return to main menu
 
-        Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
-        Collection<Component> targetCollection = null;
+        do {
+            Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
+            Collection<Component> targetCollection = null;
 
-        updateUserSelection();
-        switch ( getSelection() ) {
-            case 1:
-                targetCollection = fetchedInventoryMap.get("PowerSupply");
-                renderComponentCategory(session, targetCollection, "PowerSupply");
-                break;
-            case 2:
-                targetCollection = fetchedInventoryMap.get("Storage");
-                renderComponentCategory(session, targetCollection, "Storage");
-                break;
-            case 3:
-                targetCollection = fetchedInventoryMap.get("CPUCooler");
-                renderComponentCategory(session, targetCollection, "CPUCooler");
-                break;
-            case 4:
-                targetCollection = fetchedInventoryMap.get("Motherboard");
-                renderComponentCategory(session, targetCollection, "Motherboard");
-                break;
-            case 5:
-                targetCollection = fetchedInventoryMap.get("Memory");
-                renderComponentCategory(session, targetCollection, "Memory");
-                break;
-            case 6:
-                targetCollection = fetchedInventoryMap.get("VideoCard");
-                renderComponentCategory(session, targetCollection, "VideoCard");
-                break;
-            case 7:
-                targetCollection = fetchedInventoryMap.get("CPU");
-                renderComponentCategory(session, targetCollection, "CPU");
-                break;
-            case 8:
-                targetCollection = fetchedInventoryMap.get("Case");
-                renderComponentCategory(session, targetCollection, "Case");
-                break;
-            case 9:
-                System.out.println();
-                break;
-            default:
-                break;
-        }
+            updateUserSelection();
+            switch ( getSelection() ) {
+                case 1:
+                    targetCollection = fetchedInventoryMap.get("PowerSupply");
+                    renderComponentCategory(session, targetCollection, "PowerSupply");
+                    break;
+                case 2:
+                    targetCollection = fetchedInventoryMap.get("Storage");
+                    renderComponentCategory(session, targetCollection, "Storage");
+                    break;
+                case 3:
+                    targetCollection = fetchedInventoryMap.get("CPUCooler");
+                    renderComponentCategory(session, targetCollection, "CPUCooler");
+                    break;
+                case 4:
+                    targetCollection = fetchedInventoryMap.get("Motherboard");
+                    renderComponentCategory(session, targetCollection, "Motherboard");
+                    break;
+                case 5:
+                    targetCollection = fetchedInventoryMap.get("Memory");
+                    renderComponentCategory(session, targetCollection, "Memory");
+                    break;
+                case 6:
+                    targetCollection = fetchedInventoryMap.get("VideoCard");
+                    renderComponentCategory(session, targetCollection, "VideoCard");
+                    break;
+                case 7:
+                    targetCollection = fetchedInventoryMap.get("CPU");
+                    renderComponentCategory(session, targetCollection, "CPU");
+                    break;
+                case 8:
+                    targetCollection = fetchedInventoryMap.get("Case");
+                    renderComponentCategory(session, targetCollection, "Case");
+                    break;
+                case 9:
+                    System.out.println();
+                    break;
+                default:
+                    break;
+            }
+            renderCurrentSessionBuild(session);
+            renderSubmenuPCComponentsMenu(session);
+        } while (getSelection() != 9);
+
     }
 
 
@@ -143,6 +159,9 @@ private void renderMenu(){
     private void renderCurrentSessionBuild( Session session ){
         System.out.println( " Current Build " + session.getSessionBuild() );
         System.out.println(" Build Progress: " + componentCount + "/8");
+        if (!currentBuildPrices.isEmpty()) {
+            System.out.println(" Current Total for Build: $" + calculateCurrentTotalBuildPrice());
+        }
         System.out.println( RENDER_BAR );
 
     }
@@ -212,6 +231,7 @@ private void renderMenu(){
         int selectCounter = 1;
 
         String[] holdComponentIds = new String[ targetCollection.size() +1 ];
+        Double[] holdComponentPrices = new Double[targetCollection.size() + 1];
 
         System.out.println(RENDER_BAR);
         System.out.printf("%-5s | %-53s | %-10s | %-10s | %-20s ", "SELECT", collectionName , "PRICE", "RATING", "DESCRIPTION");
@@ -220,6 +240,7 @@ private void renderMenu(){
 
         for(Component component: targetCollection){
             holdComponentIds[ selectCounter ] = component.getProductId().toString();
+            holdComponentPrices[selectCounter] = component.getPrice();
             System.out.format("%6s | %-53s | %-10s | %-10s | %-20s",
                     selectCounter, component.getName(), component.getPrice(),
                     component.getRating(), component.getDescription());
@@ -228,14 +249,14 @@ private void renderMenu(){
         }
         System.out.println(RENDER_BAR);
 
-        String componentUUID = customerComponentSelection( holdComponentIds );
+        String componentUUID = customerComponentSelection( collectionName, holdComponentPrices, holdComponentIds );
         if (!session.getSessionBuild().containsKey(collectionName)) {
             componentCount++;
         }
         session.updateSessionBuild( collectionName, componentUUID );
 
     }
-    public String customerComponentSelection( String... componentIds ){
+    public String customerComponentSelection( String collectionName, Double[] componentPrices, String... componentIds ){
 
         boolean chooseToEdit = true;
         String targetID = "";
@@ -250,6 +271,8 @@ private void renderMenu(){
             if( editChoice.equals("Y") ) chooseToEdit = false;
         }
         while( chooseToEdit );
+
+        currentBuildPrices.put(collectionName, componentPrices[getSelection()]);
 
         return targetID;
     }
