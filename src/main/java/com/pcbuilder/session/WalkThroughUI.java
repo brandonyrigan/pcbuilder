@@ -51,10 +51,14 @@ private void renderMenu(){
 //                    System.out.println( "Update Customer Information" );
                 processCustomerInformation();
                 break;
-            default: break;
+            case 6:
+            System.out.println("Thanks for using our PC Builder! See you next time!");
+            break;
+            default:
+                System.out.println("Please select from the menu.");
+            }
         }
-    }
-    while( selection != 0 );
+        while( selection != 6 );
 }
 
 //  Helper Methods
@@ -86,7 +90,8 @@ private void renderMenu(){
                 "  [2] Shopping Cart " +
                 "  [3] View Order " +
                 "  [4] Purchase"+
-                "  [5] Update Customer Information "
+                "  [5] Update Customer Information "+
+                "  [6] Thanks for using our PC Builder! Exit here!"
         );
     }
     private void runMainMenuWalkThrough(Session session ){
@@ -150,7 +155,9 @@ private void renderMenu(){
         return new Session( customerBasicInfo );
     }
     private void welcomeTheCustomer(){
-        System.out.println( "Welcome to PC Builder where..." );
+        System.out.println("╔═══════════════════════════════════╗");
+        System.out.println("║        Welcome to PC Builder      ║");
+        System.out.println("╚═══════════════════════════════════╝");
     }
     private String[] processCustomerInformation(){
 //      TODO[]: allow user to go back and edit their entries
