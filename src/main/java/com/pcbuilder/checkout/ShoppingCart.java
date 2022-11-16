@@ -19,7 +19,6 @@ public class ShoppingCart {
                 cartItems.remove(builtId);
             }
         }
-
     }
     public void cartSize() {
             System.out.println(cartItems.size());

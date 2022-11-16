@@ -150,7 +150,9 @@ private void renderMenu(){
         return new Session( customerBasicInfo );
     }
     private void welcomeTheCustomer(){
-        System.out.println( "Welcome to PC Builder where..." );
+        System.out.println("╔═══════════════════════════════════╗");
+        System.out.println("║        Welcome to PC Builder      ║");
+        System.out.println("╚═══════════════════════════════════╝");
     }
     private String[] processCustomerInformation(){
 //      TODO[]: allow user to go back and edit their entries
