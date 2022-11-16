@@ -4,7 +4,7 @@ import com.pcbuilder.inventory.Component;
 import com.pcbuilder.session.Session;
 import java.util.Collection;
 import java.util.Map;
-import static com.pcbuilder.menus.IDecorate.*;
+import static com.pcbuilder.menus.DecorateEnum.*;
 
 public class PCComponents_SubMenu extends MainMenu {
 
@@ -14,7 +14,7 @@ public class PCComponents_SubMenu extends MainMenu {
 
     @Override
     public void renderOwnMenu() {
-        System.out.println( "SHOPPING CART SUBMENU" );
+        System.out.println( RENDER_BANNER_SUBMENU_PCCOMPONENTS.getDecoration() );
         renderSubmenuPCComponentsMenu();
         runPCComponentsSubmenu();
     }
@@ -91,7 +91,7 @@ public class PCComponents_SubMenu extends MainMenu {
 //  TODO[ ]- FIX: NUllPointerException
         String[] holdComponentNameAndId = new String[ targetCollection.size() +1 ];
 
-        System.out.println(RENDER_BAR.getDecoration());
+        System.out.println(RENDER_SHORT_BAR.getDecoration());
         System.out.printf("%-5s | %-53s | %-10s | %-10s | %-20s ", "SELECT", collectionName , "PRICE", "RATING", "DESCRIPTION");
         System.out.println();
         System.out.println(RENDER_DASHES.getDecoration());
@@ -109,7 +109,7 @@ public class PCComponents_SubMenu extends MainMenu {
             selectionCounter++;
             System.out.println();
         }
-        System.out.println(RENDER_BAR.getDecoration());
+        System.out.println(RENDER_LONG_BAR.getDecoration());
 //
         String componentNameAndId = customerComponentSelection( holdComponentNameAndId );
 

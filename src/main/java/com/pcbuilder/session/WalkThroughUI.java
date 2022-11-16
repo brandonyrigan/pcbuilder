@@ -5,8 +5,6 @@ import com.pcbuilder.build.Build;
 import com.pcbuilder.inventory.Component;
 
 import java.text.DecimalFormat;
-import com.pcbuilder.menus.IDecorate.*;
-import com.pcbuilder.menus.MainMenu;
 
 import java.util.*;
 

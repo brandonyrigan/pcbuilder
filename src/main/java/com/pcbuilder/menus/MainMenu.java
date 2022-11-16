@@ -1,13 +1,12 @@
 package com.pcbuilder.menus;
 
-import static com.pcbuilder.menus.IDecorate.*;
+import static com.pcbuilder.menus.DecorateEnum.*;
 import com.pcbuilder.build.Build;
 import com.pcbuilder.customer.Customer;
 import com.pcbuilder.session.Session;
 
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 public class MainMenu extends Menu{
 
@@ -58,7 +57,7 @@ public class MainMenu extends Menu{
         submenuMap.createSubmenus();
     }
     private void mainMenuHeader(String... customerInfo){
-        System.out.println( RENDER_BAR.getDecoration() );
+        System.out.println( RENDER_BANNER_MENU_MAINMENU.getDecoration() );
         System.out.println( " Customer:  " + customerInfo[1] + ", "+ customerInfo[0] );
         System.out.println(" MENU: " +
                 "  [1] PC Builder " +
@@ -102,12 +101,12 @@ public class MainMenu extends Menu{
         };
 
         System.out.println("Build Progress: " + getComponentCount() + "/8");
-        System.out.println( RENDER_BAR.getDecoration() );
+        System.out.println( RENDER_LONG_BAR.getDecoration() );
 
     }
     protected void displayBuildCompleteMessage() {
         System.out.println("Build is complete! All 8 components have been selected. Please go to shopping cart to complete order.");
-        System.out.println( RENDER_BAR.getDecoration() );
+        System.out.println( RENDER_SHORT_BAR.getDecoration() );
     }
 
 //  Customer Methods

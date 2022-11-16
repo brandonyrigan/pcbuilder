@@ -2,6 +2,8 @@ package com.pcbuilder.menus;
 
 import com.pcbuilder.session.Session;
 
+import static com.pcbuilder.menus.DecorateEnum.RENDER_BANNER_WELCOME;
+
 public class RenderMenusUI {
 
 
@@ -14,8 +16,12 @@ public class RenderMenusUI {
         generateNewMenu();
     }
     private void welcomeTheCustomer(){
-        System.out.println( "Welcome to PC Builder App");
-        System.out.println( "build a personal PC from an existing inventory of PC Components");
+//        System.out.println( "Welcome to PC Builder App");
+//            System.out.println("╔═══════════════════════════════════╗");
+//            System.out.println("║        Welcome to PC Builder      ║");
+//            System.out.println("╚═══════════════════════════════════╝");
+        System.out.println( RENDER_BANNER_WELCOME.getDecoration() );
+        System.out.println( "Browse and Build a personal PC from an existing inventory of PC Components");
     }
     private String[] generateDefaultGuestCustomerInformation(){
         String[] defaultGuestInfo = {"defFirstName", "defLastName", "defEmail"};

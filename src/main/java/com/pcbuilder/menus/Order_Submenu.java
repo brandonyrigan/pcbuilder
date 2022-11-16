@@ -1,10 +1,8 @@
 package com.pcbuilder.menus;
 import com.pcbuilder.checkout.Checkout;
-import com.pcbuilder.client.Main;
-import com.pcbuilder.menus.MainMenu;
 import com.pcbuilder.session.Session;
 
-import static com.pcbuilder.menus.IDecorate.*;
+import static com.pcbuilder.menus.DecorateEnum.*;
 
 public class Order_Submenu extends MainMenu {
 
@@ -18,7 +16,7 @@ public class Order_Submenu extends MainMenu {
 
     //  Order Menu
     private void renderSubmenuOrder(){
-        System.out.println( RENDER_BAR.getDecoration() );
+        System.out.println( RENDER_SHORT_BAR.getDecoration() );
         System.out.println("View Order" );
         System.out.println("   Select from the options below");
         System.out.println("   [1] Main Menu " + "[2] Update Payment Details "+ "[3] Confirm Order ");
