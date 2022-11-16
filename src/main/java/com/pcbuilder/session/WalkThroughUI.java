@@ -52,7 +52,7 @@ private void renderMenu(){
                 processCustomerInformation();
                 break;
             case 6:
-            System.out.println("Thanks for using our PC Builder!");
+            System.out.println("Thanks for using our PC Builder! See you next time!");
             break;
             default:
                 System.out.println("Please select from the menu.");
