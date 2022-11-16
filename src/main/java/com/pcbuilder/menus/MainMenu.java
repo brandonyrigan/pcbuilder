@@ -148,8 +148,8 @@ public class MainMenu extends Menu{
                     "\n email: " + customerEmail +
                     "\ndid we get that right? Yes/No" );
             updateConfirmSelection();
-            String editChoice = getConfirmSelection().toUpperCase().substring(0);
-            if( editChoice.equals("Y") ) chooseToEdit = false;
+            String editChoice = getConfirmSelection();
+            if( editChoice.equalsIgnoreCase("yes") || editChoice.equalsIgnoreCase("y") ) chooseToEdit = false;
         }
         while( chooseToEdit );
 
