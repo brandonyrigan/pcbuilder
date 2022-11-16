@@ -3,7 +3,7 @@ package com.pcbuilder.session;
 import com.pcbuilder.checkout.Checkout;
 import com.pcbuilder.build.Build;
 import com.pcbuilder.inventory.Component;
-import com.pcbuilder.menus.IDecorate;
+import com.pcbuilder.menus.IDecorate.*;
 import com.pcbuilder.menus.MainMenu;
 
 import java.util.*;
@@ -26,8 +26,8 @@ private void renderMenu(){
     welcomeTheCustomer();
     String[] customerInfo = processCustomerInformation();
     Session session = startCustomerSession(customerInfo);
-    MainMenu mainMenu = new MainMenu( session, customerInfo );
-    mainMenu.renderOwnMenu();
+//    MainMenu mainMenu = new MainMenu( session, customerInfo );
+//    mainMenu.renderOwnMenu();
 
     do{
         mainMenu(customerInfo);
@@ -38,7 +38,7 @@ private void renderMenu(){
 
         switch ( getSelection() ){
             case 1:
-                    System.out.println( "PC Builder WalkThrough" );
+//                    System.out.println( "PC Builder WalkThrough" );
                 renderSubmenuPCComponentsMenu( session );
                 runPCComponentsSubmenu( session );
                 break;
@@ -57,10 +57,14 @@ private void renderMenu(){
                     System.out.println( "Update Customer Information" );
                 processCustomerInformation();
                 break;
-            default: break;
+            case 6:
+            System.out.println("Thanks for using our PC Builder! See you next time!");
+            break;
+            default:
+                System.out.println("Please select from the menu.");
+            }
         }
-    }
-    while( selection != 0 );
+        while( selection != 6 );
 }
 
 
@@ -75,10 +79,10 @@ private void renderMenu(){
     }
     private void displayBuildCompleteMessage() {
         System.out.println("Build is complete! All 8 components have been selected. Please go to shopping cart to complete order.");
-        System.out.println(IDecorate.RENDER_BAR);
+//        System.out.println(RENDER_BAR.getDecorator());
     }
     private void createBuild(Session session) {
-//        displayBuildCompleteMessage();
+        displayBuildCompleteMessage();
         Build build = session.composeBuild(session);
         session.addBuildToCart(build);
         componentCount = 0;
@@ -87,7 +91,7 @@ private void renderMenu(){
 
 // Main Menu
     private void mainMenu(String... customerInfo){
-        System.out.println( IDecorate.RENDER_BAR );
+//        System.out.println( RENDER_BAR.getDocarator() );
         System.out.println( " Customer:  " + customerInfo[1] + ", "+ customerInfo[0] );
         System.out.println(" MENU: " +
                 "  [1] PC Builder " +
@@ -95,7 +99,8 @@ private void renderMenu(){
                 "  [3] View Order " +
                 "  [4] Purchase"+
                 "  [5] Update Customer Information "+
-                "  [6] Update Customer Information "
+                "  [5] Update Customer Information "+
+                "  [6] Thanks for using our PC Builder! Exit here!"
         );
     }
 //    private void runPCComponentsSubmenu(Session session ){
@@ -151,20 +156,23 @@ private void renderMenu(){
     private void renderCurrentSessionBuild( Session session ){
         System.out.println( " Current Build " + session.getSessionBuild() );
         System.out.println(" Build Progress: " + componentCount + "/8");
-        System.out.println( IDecorate.RENDER_BAR );
+//        System.out.println( IDecorate.RENDER_BAR );
 
     }
     public static Session startCustomerSession( String[] customerBasicInfo ){
         return new Session( customerBasicInfo );
     }
     private void welcomeTheCustomer(){
-        System.out.println( "Welcome to PC Builder where..." );
+        System.out.println("╔═══════════════════════════════════╗");
+        System.out.println("║        Welcome to PC Builder      ║");
+        System.out.println("╚═══════════════════════════════════╝");
     }
     private String[] processCustomerInformation(){
 //      TODO[]: allow user to go back and edit their entries
 //      TODO[x]: allow user to exit the App
 //      TODO[x]: refactor to use confirmSelection data field
 
+        System.out.println( "Update Customer Information" );
         String[] customerInputValues = new String[3];
         String customerFirstName;
         String customerLastName;
@@ -214,6 +222,7 @@ private void renderMenu(){
         }
         System.out.println();
     }
+
     private void runPCComponentsSubmenu( Session session ){
 
 //  TODO[ ]: keep customer in this menu until done selecting all components or return to main menu
@@ -269,10 +278,10 @@ private void renderMenu(){
 
         String[] holdComponentIds = new String[ targetCollection.size() +1 ];
 
-        System.out.println(IDecorate.RENDER_BAR);
+//        System.out.println(RENDER_BAR);
         System.out.printf("%-5s | %-53s | %-10s | %-10s | %-20s ", "SELECT", collectionName , "PRICE", "RATING", "DESCRIPTION");
         System.out.println();
-        System.out.println(IDecorate.RENDER_DASHES);
+//        System.out.println(IDecorate.RENDER_DASHES);
 
         for(Component component: targetCollection){
             holdComponentIds[ selectCounter ] = component.getProductId().toString();
@@ -282,7 +291,7 @@ private void renderMenu(){
             selectCounter++;
             System.out.println();
         }
-        System.out.println(IDecorate.RENDER_BAR);
+//        System.out.println(IDecorate.RENDER_BAR);
 
         String componentUUID = customerComponentSelection( holdComponentIds );
 
@@ -313,7 +322,7 @@ private void renderMenu(){
 
 //  Order Menu
     private void renderSubmenuOrder(){
-        System.out.println( IDecorate.RENDER_BAR );
+//        System.out.println( IDecorate.RENDER_BAR );
         System.out.println("View Order" );
         System.out.println("   Select from the options below");
         System.out.println("   [1] Main Menu " + "[2] Update Payment Details "+ "[3] Confirm Order ");
