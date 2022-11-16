@@ -2,8 +2,45 @@
 
 ## Project Description
 
-A standalone Java program that allows a Guest Customer to custom build a personal PC from an existing 
+A standalone Java program that allows a Customer to custom build a personal PC from an existing 
 inventory of PC Components. 
+
+### User Story
+
+#### Minimym Viable Product (MVP)
+    - as a guest cutomer I should be able to input my information when promted
+    - as a guest cutomer I would like to be prompted during my shopping experience
+    - as a guest cutomer I would like to be displayed my current selections and current total price
+
+    - as a guest cutomer I would like select a component from a live inventory and be specs so I can 
+      decide which component to add to my pc build
+    - as a guest cutomer I would like to be informed of my progress and when my build is complete
+
+#### Stretch Goals
+
+#### Types of Customer
+- Guest Customer - can only initiate a session
+    - name
+    - phone
+    - email
+    - session id (uuid)
+- Registered Customer
+#### Shopping Cart Feature
+    - edit/update
+    - clear/trash
+    - save (?)
+#### Stretch Goals
+
+- Pre-built PC
+    - Gaming
+    - Business
+    - Designer
+    - HighEnd
+
+- User Class
+    - ( in - memory ) users
+    - name, email, phone, uuid, order id
+
 
 ### PC Build 
 
@@ -59,26 +96,3 @@ inventory of PC Components.
             STEP 6 : PAYMENT
                 - prompt customer to select payment type
                     - crypto, credit/debit, paypal, IOU...
-
-### Types of Customer 
-  - Guest Customer - can only initiate a session
-    - name
-    - phone
-    - email
-    - session id (uuid)
-  - Registered Customer
-### Shopping Cart Feature
-    - edit/update
-    - clear/trash
-    - save (?)
-### Stretch Goals
-
-  - Pre-built PC
-    - Gaming
-    - Business
-    - Designer
-    - HighEnd
-
-  - User Class
-    - ( in - memory ) users
-    - name, email, phone, uuid, order id
