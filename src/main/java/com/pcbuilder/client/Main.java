@@ -35,8 +35,7 @@ import java.util.*;
 // TODO[ ] : PAYMENT
 //      - TODO[ ] prompt customer to select payment type
 
-public class
-Main {
+public class Main {
 
     public static void main(String[] args) {
         new WalkThroughUI();
