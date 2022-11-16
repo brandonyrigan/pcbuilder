@@ -3,20 +3,20 @@ package com.pcbuilder.session;
 import com.pcbuilder.checkout.Checkout;
 import com.pcbuilder.build.Build;
 import com.pcbuilder.inventory.Component;
+import com.pcbuilder.menus.IDecorate;
+import com.pcbuilder.menus.MainMenu;
+
 import java.util.*;
 
 public class WalkThroughUI {
-    public static final String RENDER_BAR = "**********************************************";
-    public static final String RENDER_DASHES = "-------------------------------------------";
+
 
     private int selection;
     private String confirmSelection;
-
-//    TODO[]: make session a data field
-//    private Session session;
     private int componentCount;
 
-    public WalkThroughUI() { renderMenu(); }
+
+    public WalkThroughUI(){ renderMenu(); }
 
 
 //    Business Methods
@@ -26,26 +26,27 @@ private void renderMenu(){
     welcomeTheCustomer();
     String[] customerInfo = processCustomerInformation();
     Session session = startCustomerSession(customerInfo);
+    MainMenu mainMenu = new MainMenu( session, customerInfo );
+    mainMenu.renderOwnMenu();
 
     do{
         mainMenu(customerInfo);
         renderCurrentSessionBuild( session );
-        if (componentCount == 8) {
-            createBuild(session);
-        }
+        if ( componentCount == 8 ) { createBuild(session); }
+
         updateUserSelection();
 
         switch ( getSelection() ){
             case 1:
-//                    System.out.println( "PC Builder WalkThrough" );
+                    System.out.println( "PC Builder WalkThrough" );
                 renderSubmenuPCComponentsMenu( session );
-                runPCBuilderWalkThrough( session );
+                runPCComponentsSubmenu( session );
                 break;
             case 2:
                 System.out.println( "Shopping Cart" );
                 break;
             case 3:
-//                    System.out.println( "View Order" );
+                    System.out.println( "View Order" );
                 renderSubmenuOrder();
                 runOrderWalkThrough( session );
                 break;
@@ -53,7 +54,7 @@ private void renderMenu(){
                 System.out.println( "Purchase" );
                 break;
             case 5:
-//                    System.out.println( "Update Customer Information" );
+                    System.out.println( "Update Customer Information" );
                 processCustomerInformation();
                 break;
             default: break;
@@ -62,7 +63,8 @@ private void renderMenu(){
     while( selection != 0 );
 }
 
-//  Helper Methods
+
+//  Main Menu Helper Methods
     private void updateUserSelection(){
         Scanner scanner = new Scanner(System.in);
         setSelection( Integer.parseInt( scanner.next() ));
@@ -73,10 +75,10 @@ private void renderMenu(){
     }
     private void displayBuildCompleteMessage() {
         System.out.println("Build is complete! All 8 components have been selected. Please go to shopping cart to complete order.");
-        System.out.println(RENDER_BAR);
+        System.out.println(IDecorate.RENDER_BAR);
     }
     private void createBuild(Session session) {
-        displayBuildCompleteMessage();
+//        displayBuildCompleteMessage();
         Build build = session.composeBuild(session);
         session.addBuildToCart(build);
         componentCount = 0;
@@ -85,71 +87,71 @@ private void renderMenu(){
 
 // Main Menu
     private void mainMenu(String... customerInfo){
-        System.out.println( RENDER_BAR );
+        System.out.println( IDecorate.RENDER_BAR );
         System.out.println( " Customer:  " + customerInfo[1] + ", "+ customerInfo[0] );
         System.out.println(" MENU: " +
                 "  [1] PC Builder " +
                 "  [2] Shopping Cart " +
                 "  [3] View Order " +
                 "  [4] Purchase"+
-                "  [5] Update Customer Information "
+                "  [5] Update Customer Information "+
+                "  [6] Update Customer Information "
         );
     }
-    private void runMainMenuWalkThrough(Session session ){
-
-//  TODO[ ]: keep customer in this menu until done selecting all components or return to main menu
-
-        Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
-        Collection<Component> targetCollection = null;
-
-        updateUserSelection();
-        switch ( getSelection() ) {
-            case 1:
-                targetCollection = fetchedInventoryMap.get("PowerSupply");
-                renderComponentCategory(session, targetCollection, "PowerSupply");
-                break;
-            case 2:
-                targetCollection = fetchedInventoryMap.get("Storage");
-                renderComponentCategory(session, targetCollection, "Storage");
-                break;
-            case 3:
-                targetCollection = fetchedInventoryMap.get("CPUCooler");
-                renderComponentCategory(session, targetCollection, "CPUCooler");
-                break;
-            case 4:
-                targetCollection = fetchedInventoryMap.get("Motherboard");
-                renderComponentCategory(session, targetCollection, "Motherboard");
-                break;
-            case 5:
-                targetCollection = fetchedInventoryMap.get("Memory");
-                renderComponentCategory(session, targetCollection, "Memory");
-                break;
-            case 6:
-                targetCollection = fetchedInventoryMap.get("VideoCard");
-                renderComponentCategory(session, targetCollection, "VideoCard");
-                break;
-            case 7:
-                targetCollection = fetchedInventoryMap.get("CPU");
-                renderComponentCategory(session, targetCollection, "CPU");
-                break;
-            case 8:
-                targetCollection = fetchedInventoryMap.get("Case");
-                renderComponentCategory(session, targetCollection, "Case");
-                break;
-            case 9:
-                System.out.println();
-                break;
-            default:
-                break;
-        }
-    }
+//    private void runPCComponentsSubmenu(Session session ){
+//
+////  TODO[ ]: keep customer in this menu until done selecting all components or return to main menu
+//        Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
+//        Collection<Component> targetCollection = null;
+//
+//        updateUserSelection();
+//        switch ( getSelection() ) {
+//            case 1:
+//                targetCollection = fetchedInventoryMap.get("PowerSupply");
+//                renderComponentCategory(session, targetCollection, "PowerSupply");
+//                break;
+//            case 2:
+//                targetCollection = fetchedInventoryMap.get("Storage");
+//                renderComponentCategory(session, targetCollection, "Storage");
+//                break;
+//            case 3:
+//                targetCollection = fetchedInventoryMap.get("CPUCooler");
+//                renderComponentCategory(session, targetCollection, "CPUCooler");
+//                break;
+//            case 4:
+//                targetCollection = fetchedInventoryMap.get("Motherboard");
+//                renderComponentCategory(session, targetCollection, "Motherboard");
+//                break;
+//            case 5:
+//                targetCollection = fetchedInventoryMap.get("Memory");
+//                renderComponentCategory(session, targetCollection, "Memory");
+//                break;
+//            case 6:
+//                targetCollection = fetchedInventoryMap.get("VideoCard");
+//                renderComponentCategory(session, targetCollection, "VideoCard");
+//                break;
+//            case 7:
+//                targetCollection = fetchedInventoryMap.get("CPU");
+//                renderComponentCategory(session, targetCollection, "CPU");
+//                break;
+//            case 8:
+//                targetCollection = fetchedInventoryMap.get("Case");
+//                renderComponentCategory(session, targetCollection, "Case");
+//                break;
+//            case 9:
+//                System.out.println();
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
 
 // Session  and Customer
     private void renderCurrentSessionBuild( Session session ){
         System.out.println( " Current Build " + session.getSessionBuild() );
         System.out.println(" Build Progress: " + componentCount + "/8");
-        System.out.println( RENDER_BAR );
+        System.out.println( IDecorate.RENDER_BAR );
 
     }
     public static Session startCustomerSession( String[] customerBasicInfo ){
@@ -211,8 +213,8 @@ private void renderMenu(){
             System.out.print( "   ["+ index++ +"] "+entry.getKey() );
         }
         System.out.println();
-}
-    private void runPCBuilderWalkThrough(Session session ){
+    }
+    private void runPCComponentsSubmenu( Session session ){
 
 //  TODO[ ]: keep customer in this menu until done selecting all components or return to main menu
 
@@ -267,10 +269,10 @@ private void renderMenu(){
 
         String[] holdComponentIds = new String[ targetCollection.size() +1 ];
 
-        System.out.println(RENDER_BAR);
+        System.out.println(IDecorate.RENDER_BAR);
         System.out.printf("%-5s | %-53s | %-10s | %-10s | %-20s ", "SELECT", collectionName , "PRICE", "RATING", "DESCRIPTION");
         System.out.println();
-        System.out.println(RENDER_DASHES);
+        System.out.println(IDecorate.RENDER_DASHES);
 
         for(Component component: targetCollection){
             holdComponentIds[ selectCounter ] = component.getProductId().toString();
@@ -280,12 +282,12 @@ private void renderMenu(){
             selectCounter++;
             System.out.println();
         }
-        System.out.println(RENDER_BAR);
+        System.out.println(IDecorate.RENDER_BAR);
 
         String componentUUID = customerComponentSelection( holdComponentIds );
-        if (!session.getSessionBuild().containsKey(collectionName)) {
-            componentCount++;
-        }
+
+        if (!session.getSessionBuild().containsKey(collectionName))  componentCount++;
+
         session.updateSessionBuild( collectionName, componentUUID );
 
     }
@@ -311,7 +313,7 @@ private void renderMenu(){
 
 //  Order Menu
     private void renderSubmenuOrder(){
-        System.out.println( RENDER_BAR );
+        System.out.println( IDecorate.RENDER_BAR );
         System.out.println("View Order" );
         System.out.println("   Select from the options below");
         System.out.println("   [1] Main Menu " + "[2] Update Payment Details "+ "[3] Confirm Order ");

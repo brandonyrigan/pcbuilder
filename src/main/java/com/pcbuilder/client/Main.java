@@ -1,10 +1,11 @@
 package com.pcbuilder.client;
 
-import com.pcbuilder.inventory.Component;
-import com.pcbuilder.session.Session;
-import com.pcbuilder.session.WalkThroughUI;
+import com.pcbuilder.menus.RenderMenusUI;
 
-import java.util.*;
+// TODO [ ] - Refactor: WalkThroughUI (not needed)
+    // TODO [X] - replace with RenderMenusUI
+    // TODO [X] - add abstract Menu and implement MainMenu with renderOwnMenu
+    // TODO [X] - extend submenus from MainMenu Parent Class and implement Override renderOwnMenu
 
 //DONE Step 0: Greet and Process Customer
 //  DONE[x] Welcome the User and Capture Customer Info
@@ -20,10 +21,10 @@ import java.util.*;
 //DONE STEP 3: Render each Component Category and Save customers selection
 //  DONE[x] message customer of completed Build
 //  DONE[x] render current Build
-// TODO[ ] : SHOPPING CART
-//      - TODO[ ] add Build to cart
-//      - TODO[ ] remove Build from cart
-//      - TODO[ ] view contents
+// DONE[x] : SHOPPING CART
+//      - TODO[x] add Build to cart
+//      - TODO[x] remove Build from cart
+//      - TODO[x] view contents
 // TODO[ ] : ORDER
 //      - TODO[x] create new order
 //      - TODO[x] display order to customer
@@ -38,7 +39,8 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        new WalkThroughUI();
+//        new WalkThroughUI();
+        new RenderMenusUI();
     }
 
 }

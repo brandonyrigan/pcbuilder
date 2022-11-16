@@ -30,8 +30,12 @@ public class BuildFactory {
     private static Component findComponentByUUID(String componentType, Session session) {
         Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
         Component selectedComponent = null;
+
         for (Component component : fetchedInventoryMap.get(componentType)) {
-            if (component.getProductId().toString().equals(session.getSessionBuild().get(componentType))) {
+            String keyValue = session.getSessionBuild().get( componentType );
+            String[] split = keyValue.split(",");
+            String targetID = split[1];
+            if (component.getProductId().toString().equals(targetID)) {
                 selectedComponent = component;
             }
         }
