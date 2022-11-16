@@ -5,6 +5,8 @@ import com.pcbuilder.build.Build;
 import com.pcbuilder.customer.Customer;
 import com.pcbuilder.session.Session;
 
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -17,6 +19,7 @@ public class MainMenu extends Menu{
     protected int selection;
     public int componentCount;
     protected String[] customerInfo;
+    protected Map<String, Double> currentBuildPrices = new HashMap<>();
 
 
 //TODO[ ] - Refactor: Constructor Injection > Setter Injection
@@ -37,7 +40,7 @@ public class MainMenu extends Menu{
 
             mainMenuHeader( getCustomerInfo() );
             renderCurrentSessionBuild();
-//            if ( getComponentCount() == 8 ) { createBuild(); }
+            if ( getComponentCount() == 8 ) { createBuild(); }
 
             updateUserSelection();
             Menu targetSubmenu = submenuMap.runSubmenu( getSelection() );
@@ -45,9 +48,6 @@ public class MainMenu extends Menu{
             targetSubmenu.renderOwnMenu();
 
         } while( getSelection() != 0 );
-
-//        createBuild();
-
     }
 
 
@@ -85,7 +85,7 @@ public class MainMenu extends Menu{
         session.addBuildToCart(build);
         setComponentCount( 0 );
     }
-    private void renderCurrentSessionBuild(){
+    protected void renderCurrentSessionBuild(){
         Session session = getSession();
         Map<String, String> sessionBuild = session.getSessionBuild();
         String categoryName = "";
@@ -102,11 +102,23 @@ public class MainMenu extends Menu{
 
         System.out.println("Build Progress: " + getComponentCount() + "/8");
         System.out.println( RENDER_LONG_BAR.getDecoration() );
+        if (!currentBuildPrices.isEmpty()) {
+            System.out.println("Current Total Build Price: $" + calculateCurrentTotalBuildPrice());
+        }
+        System.out.println( RENDER_LONG_BAR.getDecoration() );
 
     }
     protected void displayBuildCompleteMessage() {
         System.out.println("Build is complete! All 8 components have been selected. Please go to shopping cart to complete order.");
         System.out.println( RENDER_SHORT_BAR.getDecoration() );
+    }
+    private String calculateCurrentTotalBuildPrice() {
+        Double total = 0.0;
+        DecimalFormat df = new DecimalFormat("#.##");
+        for (Map.Entry<String, Double> price : currentBuildPrices.entrySet()) {
+            total += price.getValue();
+        }
+        return df.format(total);
     }
 
 //  Customer Methods

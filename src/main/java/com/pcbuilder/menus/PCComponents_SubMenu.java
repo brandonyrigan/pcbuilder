@@ -8,6 +8,7 @@ import static com.pcbuilder.menus.DecorateEnum.*;
 
 public class PCComponents_SubMenu extends MainMenu {
 
+
     public PCComponents_SubMenu( Session session ) {
         super(session);
     }
@@ -35,52 +36,56 @@ public class PCComponents_SubMenu extends MainMenu {
     }
     private void runPCComponentsSubmenu(){
 
-//TODO[ ]: keep customer in this menu until done selecting all components or return to main menu
-        Session session = getSession();
-        Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
-        Collection<Component> targetCollection = null;
-
+//TODO[X]: keep customer in this menu until done selecting all components or return to main menu
 //TODO[ ] - Refactor multiple switch statements
-        updateUserSelection();
-        switch ( getSelection() ) {
-            case 1:
-                targetCollection = fetchedInventoryMap.get("PowerSupply");
-                renderComponentCategory(session, targetCollection, "PowerSupply");
-                break;
-            case 2:
-                targetCollection = fetchedInventoryMap.get("Storage");
-                renderComponentCategory(session, targetCollection, "Storage");
-                break;
-            case 3:
-                targetCollection = fetchedInventoryMap.get("CPUCooler");
-                renderComponentCategory(session, targetCollection, "CPUCooler");
-                break;
-            case 4:
-                targetCollection = fetchedInventoryMap.get("Motherboard");
-                renderComponentCategory(session, targetCollection, "Motherboard");
-                break;
-            case 5:
-                targetCollection = fetchedInventoryMap.get("Memory");
-                renderComponentCategory(session, targetCollection, "Memory");
-                break;
-            case 6:
-                targetCollection = fetchedInventoryMap.get("VideoCard");
-                renderComponentCategory(session, targetCollection, "VideoCard");
-                break;
-            case 7:
-                targetCollection = fetchedInventoryMap.get("CPU");
-                renderComponentCategory(session, targetCollection, "CPU");
-                break;
-            case 8:
-                targetCollection = fetchedInventoryMap.get("Case");
-                renderComponentCategory(session, targetCollection, "Case");
-                break;
-            case 9:
-                System.out.println();
-                break;
-            default:
-                break;
-        }
+        do {
+            Session session = getSession();
+            Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
+            Collection<Component> targetCollection = null;
+
+            updateUserSelection();
+            switch ( getSelection() ) {
+                case 1:
+                    targetCollection = fetchedInventoryMap.get("PowerSupply");
+                    renderComponentCategory(session, targetCollection, "PowerSupply");
+                    break;
+                case 2:
+                    targetCollection = fetchedInventoryMap.get("Storage");
+                    renderComponentCategory(session, targetCollection, "Storage");
+                    break;
+                case 3:
+                    targetCollection = fetchedInventoryMap.get("CPUCooler");
+                    renderComponentCategory(session, targetCollection, "CPUCooler");
+                    break;
+                case 4:
+                    targetCollection = fetchedInventoryMap.get("Motherboard");
+                    renderComponentCategory(session, targetCollection, "Motherboard");
+                    break;
+                case 5:
+                    targetCollection = fetchedInventoryMap.get("Memory");
+                    renderComponentCategory(session, targetCollection, "Memory");
+                    break;
+                case 6:
+                    targetCollection = fetchedInventoryMap.get("VideoCard");
+                    renderComponentCategory(session, targetCollection, "VideoCard");
+                    break;
+                case 7:
+                    targetCollection = fetchedInventoryMap.get("CPU");
+                    renderComponentCategory(session, targetCollection, "CPU");
+                    break;
+                case 8:
+                    targetCollection = fetchedInventoryMap.get("Case");
+                    renderComponentCategory(session, targetCollection, "Case");
+                    break;
+                case 9:
+                    System.out.println();
+                    break;
+                default:
+                    break;
+            }
+            renderCurrentSessionBuild();
+            renderSubmenuPCComponentsMenu();
+        } while (getSelection() != 9);
 
     }
     private void renderComponentCategory(Session session, Collection<Component> targetCollection, String collectionName ){
@@ -92,6 +97,7 @@ public class PCComponents_SubMenu extends MainMenu {
         String[] holdComponentNameAndId = new String[ targetCollection.size() +1 ];
 
         System.out.println(RENDER_SHORT_BAR.getDecoration());
+        Double[] holdComponentPrices = new Double[targetCollection.size() + 1];
         System.out.printf("%-5s | %-53s | %-10s | %-10s | %-20s ", "SELECT", collectionName , "PRICE", "RATING", "DESCRIPTION");
         System.out.println();
         System.out.println(RENDER_DASHES.getDecoration());
@@ -100,7 +106,7 @@ public class PCComponents_SubMenu extends MainMenu {
 
             componentId = component.getProductId().toString();
             componentName = component.getName();
-
+            holdComponentPrices[selectionCounter] = component.getPrice();
             holdComponentNameAndId[ selectionCounter ] = componentName + "," + componentId  ;
 
             System.out.format("%6s | %-53s | %-10s | %-10s | %-20s",
@@ -111,7 +117,7 @@ public class PCComponents_SubMenu extends MainMenu {
         }
         System.out.println(RENDER_LONG_BAR.getDecoration());
 //
-        String componentNameAndId = customerComponentSelection( holdComponentNameAndId );
+        String componentNameAndId = customerComponentSelection( collectionName, holdComponentPrices, holdComponentNameAndId );
 
 //      TODO[ ]- FIX: componentCount not being updated at ParentClass
         if (!session.getSessionBuild().containsKey(collectionName)) {
@@ -122,7 +128,7 @@ public class PCComponents_SubMenu extends MainMenu {
         session.updateSessionBuild( collectionName, componentNameAndId );
 
     }
-    public String customerComponentSelection( String... componentNameAndId){
+    public String customerComponentSelection( String collectionName, Double[] componentPrices, String... componentNameAndId){
         boolean chooseToEdit = true;
         String targetComponentNameAndId = "";
         do{
@@ -139,6 +145,7 @@ public class PCComponents_SubMenu extends MainMenu {
         }
         while( chooseToEdit );
 
+        currentBuildPrices.put(collectionName, componentPrices[getSelection()]);
 
         return targetComponentNameAndId;
     }
