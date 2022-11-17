@@ -12,7 +12,7 @@ public class Checkout_Submenu extends MainMenu {
 
     public Checkout_Submenu( Session session ) {
         super(session);
-        setCheckout( createNewCheckout() );
+        setCheckout( new Checkout() );
     }
 
     @Override
@@ -22,23 +22,30 @@ public class Checkout_Submenu extends MainMenu {
     }
     private void renderCheckoutSubmenu(){
         System.out.println( RENDER_BANNER_SUBMENU_PURCHASE.getDecoration() );
-        System.out.println("CheckOut Details" );
+        System.out.println("CheckOut Menu" );
         System.out.println("   Select from the options below");
-        System.out.println("   [1] Main Menu " + " [2] Add Payment" + " [3] Make Payment " );
+        System.out.println("   [1] Main Menu " + " [2] Add Payment" + " [3] Update Payment" + " [4] Make Payment " );
     }
     private void runOrderSubmenu(){
+
+        createNewCheckout();
 
         Checkout checkout = getCheckout();
         checkout.displayOrderDetails();
 
-        updateUserSelection();
         do{
+            updateUserSelection();
             switch ( getSelection() ){
                 case 1: break;
                 case 2:
+                    System.out.println("dong");
                     addPaymentMethod();
                     break;
                 case 3:
+                    System.out.println("ding");
+                    updatePaymentInfo();
+                    break;
+                case 4:
                     makePayment();
                     break;
                 default: break;
@@ -49,7 +56,7 @@ public class Checkout_Submenu extends MainMenu {
 
     private void addPaymentMethod(){
         addPaymentMethodToSessionOrder();
-        updateUserSelection();
+//        updateUserSelection();
     }
     private void addPaymentMethodToSessionOrder(){
         Checkout checkout = getCheckout();
@@ -60,17 +67,35 @@ public class Checkout_Submenu extends MainMenu {
         Integer ccCCV = Integer.parseInt(ccInfo[2]);
 
         Payment newPayment = new Payment( ccNumber, ccCCV, name );
-
         checkout.addCustomerPayment( newPayment );
 
-        updateUserSelection();
+        System.out.println( " Your Card Info: " );
+        checkout.displayPaymentInfo();
+        System.out.println( " after displayinfo " );
+//        updateUserSelection();
     }
+
+    private void updatePaymentInfo(){
+        Checkout checkout = getCheckout();
+
+        String[] ccInfo = customerCreditCardInfo().split(",");
+        String name = ccInfo[0];
+        Integer ccNumber = Integer.parseInt(ccInfo[1]);
+        Integer ccCCV = Integer.parseInt(ccInfo[2]);
+
+        Payment newPayment = new Payment( ccNumber, ccCCV, name );
+        checkout.addCustomerPayment( newPayment );
+
+        System.out.println( " Your Updated Card info: " );
+        checkout.displayPaymentInfo();
+
+    }
+
     private void makePayment(){
 
         Checkout checkout = getCheckout();
         checkout.processPayment();
-//        EXIT
-        updateUserSelection();
+        System.out.println( RENDER_BANNER_THANKYOU.getDecoration() );
     }
 
     private String customerCreditCardInfo(){
@@ -90,9 +115,9 @@ public class Checkout_Submenu extends MainMenu {
                 customerCreditCardNumber + "," +
                 customerCCVCode;
     }
-    private Checkout createNewCheckout(){
+    private void createNewCheckout(){
         Checkout newCheckoutSession = new Checkout( session.getOrder(), new Payment() );
-        return newCheckoutSession;
+        setCheckout( newCheckoutSession );
     }
 
 

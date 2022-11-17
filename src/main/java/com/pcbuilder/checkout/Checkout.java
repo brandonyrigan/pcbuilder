@@ -18,18 +18,22 @@ public class Checkout {
         order.printSessionOrder();
     }
     public void addCustomerPayment( Payment newPayment ){
-
         setPayment( newPayment );
     }
     public void processPayment(){
-
         System.out.println( "Fetching order details..." );
         System.out.println( "Fetching payment method..." );
         System.out.println( "Processing payment..." );
         System.out.println( "payment approved, Thank you for your purchase" );
         System.out.println( "Submitting payment..." );
-
         messageSuccessfulPayment();
+    }
+
+    public void displayPaymentInfo(){
+        Payment payment = getPayment();
+        System.out.println( " Name:  " + payment.customerNameOnCard );
+        System.out.println( " ccNumber:  " + payment.creditCarNumber );
+        System.out.println( " ccv:  " + payment.ccv );
     }
 
 //  Helper Methods

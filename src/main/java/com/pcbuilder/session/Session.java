@@ -62,7 +62,8 @@ public class Session {
         Customer customerSession = getCustomer();
         ShoppingCart sessionShoppingCart = getShoppingCart();
         Map<String, String> sessionBuild = getSessionBuild();
-        Order newOrder = new Order( customerSession, sessionShoppingCart, sessionBuild );
+        HashMap<String, Double> emptyBuildPrice = new HashMap<>();
+        Order newOrder = new Order( customerSession, sessionShoppingCart, sessionBuild, emptyBuildPrice);
         setOrder(newOrder);
     }
     public ShoppingCart createNewShoppingCart(){

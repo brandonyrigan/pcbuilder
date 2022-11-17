@@ -19,51 +19,69 @@ public class Order {
     LocalDateTime dateCreatedOrder;
     private UUID orderId;
     Map<String, String> sessionBuild;
+    Map<String, Double> currentBuildPrice;
     ShoppingCart shoppingCart;
 
     public Order(){}
-    public Order( Customer customer, ShoppingCart shoppingCart, Map<String, String> sessionBuild  ){
+    public Order( Customer customer, ShoppingCart shoppingCart, Map<String, String> sessionBuild, Map<String, Double> currentBuildPrices){
         setOrderId();
         setDateCreatedOrder();
         setCustomer( customer );
         setShoppingCart( shoppingCart );
         setSessionBuild( sessionBuild );
+        setCurrentBuildPrice( currentBuildPrices );
     }
 
 //  Business Logic
     public void printSessionOrder(){
 
-//        System.out.println( " getting last name " + getCustomer().getLastName() );
         String optionalLastName = Optional.of( getCustomer().getLastName() ).orElse("no last");
-        System.out.println( "optional" + optionalLastName );
         String optionalFirstName = Optional.of( getCustomer().getFirstName() ).orElse("no last");
         String optionalEmail = Optional.of( getCustomer().getEmail() ).orElse("no email");
-        UUID optionalCustomerId = Optional.of( getCustomer().getCustomerUUID() ).orElse( UUID.fromString("no id"));
-        Integer optionalShoppingCartSize = Optional.of( getShoppingCart().cartItems.size() ).orElse(0);
-//        Double optionalTotals = Optional.of( getShoppingCart().priceTotals ).orElse(0.0);
-        UUID optionalOrderId = Optional.of( getOrderId() ).orElse( UUID.fromString("no id"));
+        String optionalCustomerId = Optional.of( getCustomer().getCustomerUUID().toString() ).orElse( "no customer uuid" );
+        Integer optionalShoppingCartSize = Optional.of( getShoppingCart().getCartItems().size() ).orElse(0);
+        String optionalOrderId = Optional.of( getOrderId().toString() ).orElse("no order uuid");
         Map<String, String> optionalSessionBuild = Optional.of( getSessionBuild() ).orElse( new HashMap<>() );
-
-//        String lastName = getCustomer().getLastName();
-//        String firstName = getCustomer().getFirstName();
-//        String email = getCustomer().getEmail();
-//        String customerID = getCustomer().getEmail();
-//        int shoppingCartSize = getShoppingCart().cartItems.size();
-//        double total = getShoppingCart().priceTotals;
+        Map<String, Double> optionalSubTotals = Optional.of( getCurrentBuildPrice() ).orElse( new HashMap<>() );
+        Double totals = calcTotalFromSubTotals( getCurrentBuildPrice() );
 
         System.out.println();
         System.out.println(RENDER_TXT_SPACE.getDecoration()+"Customer Details: " + optionalLastName + "," + optionalFirstName );
         System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"customer id: " + optionalCustomerId );
         System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"customer email: " + optionalEmail );
         System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"order id: " + optionalOrderId) ;
-        System.out.println(RENDER_TXT_SPACE.getDecoration()+"Session Build :  "  + optionalSessionBuild );
+
+        System.out.println(RENDER_TXT_SPACE.getDecoration()+"Session Build :  ");
+        renderSessionBuild(optionalSessionBuild);
+
         System.out.println(RENDER_TXT_SPACE.getDecoration()+"Shopping Cart Details");
         System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Shopping Cart : [" + optionalShoppingCartSize + "]" );
 
-//        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Total: " + optionalTotals );
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"SubTotal: " + optionalSubTotals );
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Total: " + totals);
 
     }
 
+    private Double calcTotalFromSubTotals( Map<String, Double> subTotals ){
+        Double totals = 0.0;
+
+        Optional<Map<String, Double>> optionalSubTotals = Optional.ofNullable(subTotals);
+
+        if ( optionalSubTotals.isPresent() ) {
+
+            Map<String, Double> stringDoubleMap = optionalSubTotals.get();
+            for (Map.Entry<String, Double> entry : stringDoubleMap.entrySet()) {
+                totals += entry.getValue();
+            }
+        }
+        return totals;
+
+    }
+    private void renderSessionBuild(Map<String, String> optionalSessionBuild){
+        for (Map.Entry<String, String> entry : optionalSessionBuild.entrySet()){
+            System.out.println(RENDER_TXT_SPACEx2.getDecoration()+ "["+ entry.getKey()+ "] "+": "+ entry.getValue()  );
+        }
+    }
 
 //  Accessor Methods
     public UUID getOrderId() { return orderId; }
@@ -79,6 +97,6 @@ public class Order {
     public void setShoppingCart(ShoppingCart shoppingCart) { this.shoppingCart = shoppingCart; }
     public Map<String, String> getSessionBuild() { return sessionBuild; }
     public void setSessionBuild(Map<String, String> sessionBuild) { this.sessionBuild = sessionBuild; }
-
-
+    public Map<String, Double> getCurrentBuildPrice() { return currentBuildPrice; }
+    public void setCurrentBuildPrice(Map<String, Double> currentBuildPrice) { this.currentBuildPrice = currentBuildPrice; }
 }

@@ -14,14 +14,13 @@ public class PCComponents_SubMenu extends MainMenu {
 
     @Override
     public void renderOwnMenu() {
-        System.out.println( RENDER_BANNER_SUBMENU_PCCOMPONENTS.getDecoration() );
         renderSubmenuPCComponentsMenu();
         runPCComponentsSubmenu();
     }
 
     //  PC Builder Submenu
     private void renderSubmenuPCComponentsMenu(){
-
+        System.out.println( RENDER_BANNER_SUBMENU_PCCOMPONENTS.getDecoration() );
         System.out.println("   Select which component you would like to view an inventory for");
         System.out.println("   [9] Return to Main Menu  [0] Shopping Cart" );
 

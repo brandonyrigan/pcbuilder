@@ -44,6 +44,11 @@ public enum DecorateEnum {
                     "\n║                                               UPDATE CUSTOMER INFO                                      ║"+
                     "\n╚═════════════════════════════════════════════════════════════════════════════════════════════════════════╝"
     ),
+    RENDER_BANNER_THANKYOU(
+                      "╔═════════════════════════════════════════════════════════════════════════════════════════════════════════╗"+
+                    "\n║                                          THANK YOU FOR YOUR PURCHASE                                     ║"+
+                    "\n╚═════════════════════════════════════════════════════════════════════════════════════════════════════════╝"
+    ),
     ;
     DecorateEnum(String decoration) { this.decoration = decoration; }
     private final String decoration;

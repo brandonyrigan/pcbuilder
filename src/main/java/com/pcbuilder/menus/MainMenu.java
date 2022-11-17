@@ -29,7 +29,7 @@ public class MainMenu extends Menu{
         setSubmenuMap( submenuMap ); // Reactor to use Constructor Injection
     }
 
-//  TODO[]- FIX: NullPointerException, need an Optional
+    //TODO[]- FIX: NullPointerException, need an Optional
     @Override
     public void renderOwnMenu() {
         createSubmenus();
@@ -38,7 +38,6 @@ public class MainMenu extends Menu{
             renderCurrentSessionBuild();
             updateUserSelection();
             Menu targetSubmenu = submenuMap.runSubmenu( getSelection() );
-//TODO[]- FIX: NullPointerException, need an Optional
             targetSubmenu.renderOwnMenu();
 
         } while( getSelection() != 0 );
@@ -179,6 +178,8 @@ public class MainMenu extends Menu{
     public void setCustomerInfo(String[] customerInfo) { this.customerInfo = customerInfo; }
     public int getComponentCount() { return componentCount; }
     public void setComponentCount( int componentCount ) { this.componentCount = componentCount; }
+    public Map<String, Double> getCurrentBuildPrices() { return currentBuildPrices; }
 
+    public void setCurrentBuildPrices(Map<String, Double> currentBuildPrices) { this.currentBuildPrices = currentBuildPrices; }
 
 }

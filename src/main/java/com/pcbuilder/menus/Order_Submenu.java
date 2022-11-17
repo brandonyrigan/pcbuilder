@@ -27,28 +27,30 @@ public class Order_Submenu extends MainMenu {
         System.out.println( RENDER_SHORT_BAR.getDecoration() );
         System.out.println("View Order" );
         System.out.println("   Select from the options below");
-        System.out.println("   [1] Main Menu " + " [2] Create New Order" + " [3] Confirm Order "+ " [4] Proceed to Checkout ");
-        if( !getHasConfirmedOrder() ) messageUserHasNoConfirmedOrders();
+//        System.out.println("   [1] Main Menu " + " [2] Confirm Order "+ " [3] Proceed to Checkout ");
+        System.out.println("   [1] Main Menu " + " [2] Confirm Order ");
     }
     private void runOrderWalkThrough(){
 //TODO[ ] : Refactor switch case
+
+        createNewOrder();
+
         Order order = getSession().getOrder();
-        if( getHasConfirmedOrder() ) order.printSessionOrder();
+        order.printSessionOrder();
         updateUserSelection();
         do{
+
             switch ( getSelection() ){
                 case 1: break;
                 case 2:
-                    createNewOrder();
-                    break;
-                case 3:
                     processCustomerOrder();
                     break;
-                case 4 :
-                    proceedToPurchase();
-                    break;
+//                case 3 :
+//                    proceedToPurchase();
+//                    break;
                 default: break;
             }
+
         } while ( getSelection() != 1 );
 
     }
@@ -56,42 +58,35 @@ public class Order_Submenu extends MainMenu {
 
     //  Process the Order Menu
     private void processCustomerOrder() {
-        System.out.println(getHasConfirmedOrder());
-        if( !getHasConfirmedOrder() ) messageUserHasNoConfirmedOrders();
-        else{
-            System.out.println( "Thank You, Initiating Confirmation..." );
-            System.out.println( "Fetching order details..." );
-            System.out.println( "Validating order details..." );
-            System.out.println( "Order Confirmation  complete...Thank you." );
-        }
+        System.out.println( "Thank You, Initiating Confirmation..." );
+        System.out.println( "Fetching order details..." );
+        System.out.println( "Validating order details..." );
+        System.out.println( "Order Confirmation  complete...Thank you." );
+        setHasConfirmedOrder(true);
         updateUserSelection();
     }
     private void createNewOrder(){
-        int shoppingCartSize = getSession().getShoppingCart().cartItems.size();
-
-        if( shoppingCartSize < 1 ) messageUserHasEmptyCart();
-        else{
-            Session session = getSession();
-            session.createNewOrder();
-            setHasConfirmedOrder( true );
-        }
+        Session session = getSession();
+        session.createNewOrder();
+        System.out.println( " New Order Created, Thank You. " );
+        setHasConfirmedOrder(true);
         updateUserSelection();
     };
     private void proceedToPurchase(){
-        if( getHasConfirmedOrder() ) setSelection(1);
-        else System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Cannot Checkout on an Empty Cart, Nothing to Purchase " );
+        if( ! getHasConfirmedOrder() )System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Cannot Checkout on an Empty Cart, Nothing to Purchase " );
         updateUserSelection();
     }
-    private void messageUserHasNoConfirmedOrders(){
-        System.out.println();
-        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Sorry, cannot create new order on an Empty Cart " );
-        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Please, continue shopping to Create a New Order, Thank You. " );
-    }
-    private void messageUserHasEmptyCart(){
-        System.out.println();
-        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Sorry, No Items Found in Your ShoppingCart." );
-    }
+//    private void messageUserHasNoConfirmedOrders(){
+//        System.out.println();
+//        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Sorry, cannot create new order on an Empty Cart " );
+//        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Please, continue shopping to Create a New Order, Thank You. " );
+//    }
+//    private void messageUserHasEmptyCart(){
+//        System.out.println();
+//        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Sorry, No Items Found in Your ShoppingCart." );
+//    }
 
-    protected Boolean getHasConfirmedOrder() { return hasConfirmedOrder; }
-    protected void setHasConfirmedOrder(Boolean hasConfirmedOrder) { this.hasConfirmedOrder = hasConfirmedOrder; }
+    public Boolean getHasConfirmedOrder() { return hasConfirmedOrder; }
+
+    public void setHasConfirmedOrder(Boolean hasConfirmedOrder) { this.hasConfirmedOrder = hasConfirmedOrder; }
 }

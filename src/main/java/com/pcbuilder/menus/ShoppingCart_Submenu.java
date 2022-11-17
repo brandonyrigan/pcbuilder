@@ -17,9 +17,6 @@ public class ShoppingCart_Submenu extends MainMenu {
     @Override
     public void renderOwnMenu() {
         System.out.println( RENDER_BANNER_SUBMENU_SHOPPINGCART.getDecoration() );
-        System.out.println( "shopping cart submenu" );
-        createBuild();
-        System.out.println( "SHOPPING CART" );
         renderCurrentSessionBuild();
         renderSubmenuShoppingCartMenu();
     }
