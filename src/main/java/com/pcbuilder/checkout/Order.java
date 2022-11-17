@@ -40,7 +40,7 @@ public class Order {
         String optionalEmail = Optional.of( getCustomer().getEmail() ).orElse("no email");
         UUID optionalCustomerId = Optional.of( getCustomer().getCustomerUUID() ).orElse( UUID.fromString("no id"));
         Integer optionalShoppingCartSize = Optional.of( getShoppingCart().cartItems.size() ).orElse(0);
-        Double optionalTotals = Optional.of( getShoppingCart().priceTotals ).orElse(0.0);
+//        Double optionalTotals = Optional.of( getShoppingCart().priceTotals ).orElse(0.0);
         UUID optionalOrderId = Optional.of( getOrderId() ).orElse( UUID.fromString("no id"));
         Map<String, String> optionalSessionBuild = Optional.of( getSessionBuild() ).orElse( new HashMap<>() );
 
@@ -60,7 +60,7 @@ public class Order {
         System.out.println(RENDER_TXT_SPACE.getDecoration()+"Shopping Cart Details");
         System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Shopping Cart : [" + optionalShoppingCartSize + "]" );
 
-        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Total: " + optionalTotals );
+//        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Total: " + optionalTotals );
 
     }
 

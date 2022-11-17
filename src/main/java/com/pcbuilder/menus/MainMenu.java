@@ -6,9 +6,7 @@ import com.pcbuilder.customer.Customer;
 import com.pcbuilder.session.Session;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class MainMenu extends Menu{
 
@@ -34,19 +32,14 @@ public class MainMenu extends Menu{
 //  TODO[]- FIX: NullPointerException, need an Optional
     @Override
     public void renderOwnMenu() {
-
         createSubmenus();
-        updateGuestCustomerDetails();
-
         do{
-
-            mainMenuHeader( getCustomerInfo() );
+            mainMenuHeader();
             renderCurrentSessionBuild();
-            if ( getComponentCount() == 8 ) { createBuild(); }
-
             updateUserSelection();
             Menu targetSubmenu = submenuMap.runSubmenu( getSelection() );
-            targetSubmenu.renderOwnMenu(); // FIX: null pointer exception
+//TODO[]- FIX: NullPointerException, need an Optional
+            targetSubmenu.renderOwnMenu();
 
         } while( getSelection() != 0 );
     }
@@ -57,9 +50,11 @@ public class MainMenu extends Menu{
         SubmenuMap submenuMap = getSubmenuMap();
         submenuMap.createSubmenus();
     }
-    private void mainMenuHeader(String... customerInfo){
+    private void mainMenuHeader(){
+        String firstName = session.getCustomer().getFirstName();
+        String lastName = session.getCustomer().getLastName();
         System.out.println( RENDER_BANNER_MENU_MAINMENU.getDecoration() );
-        System.out.println( " Customer:  " + customerInfo[1] + ", "+ customerInfo[0] );
+        System.out.println( " Customer:  " + firstName + ", "+ lastName );
         System.out.println(" MENU: " +
                 "  [1] PC Builder " +
                 "  [2] Shopping Cart " +
@@ -81,11 +76,8 @@ public class MainMenu extends Menu{
 //  Build Methods
     protected void createBuild( ) {
         Session session = getSession();
-        displayBuildCompleteMessage();
         Build build = session.composeBuild( session );
-        System.out.println("test"+build);
         session.addBuildToCart(build);
-        setComponentCount( 0 );
     }
     protected void renderCurrentSessionBuild(){
         Session session = getSession();
@@ -123,58 +115,56 @@ public class MainMenu extends Menu{
         return df.format(total);
     }
 
-
-//  Customer Methods
-    private void updateGuestCustomerDetails(){
-        String[] actualCustomerInfo = processCustomerInformation();
-        updateCustomerBasicInformation( actualCustomerInfo );
-    }
-    private void updateCustomerBasicInformation(String... customerInfo ) {
-        Customer guestCustomer = getSession().getCustomer();
-        guestCustomer.updateCustomerBasicInfo( customerInfo );
-    }
-    private String[] processCustomerInformation(){
-//      DONE[x]: allow user to go back and edit their entries
-//      DONE[x]: allow user to exit the App
-//      DONE[x]: refactor to use confirmSelection data field
-
-        String[] customerInputValues = new String[3];
-        String customerFirstName;
-        String customerLastName;
-        String customerEmail;
-
-        boolean chooseToEdit = true;
-
-        do{
-            System.out.print("Enter your first name: ");
-            updateConfirmSelection();
-            customerFirstName = getConfirmSelection();
-
-            System.out.print("Enter your last name: ");
-            updateConfirmSelection();
-            customerLastName = getConfirmSelection();
-
-            System.out.print("Enter your email: ");
-            updateConfirmSelection();
-            customerEmail = getConfirmSelection();
-
-            System.out.println( "\nYou entered " +
-                    "\n name: " + customerLastName+", "+customerFirstName +
-                    "\n email: " + customerEmail +
-                    "\ndid we get that right? Yes/No" );
-            updateConfirmSelection();
-            String editChoice = getConfirmSelection();
-            if( editChoice.equalsIgnoreCase("yes") || editChoice.equalsIgnoreCase("y") ) chooseToEdit = false;
-        }
-        while( chooseToEdit );
-
-        customerInputValues[0] = customerFirstName;
-        customerInputValues[1] = customerLastName;
-        customerInputValues[2] = customerEmail;
-
-        return customerInputValues;
-    }
-
+////  Customer Methods
+//    private void updateGuestCustomerDetails(){
+//        String[] actualCustomerInfo = processCustomerInformation();
+//        updateCustomerBasicInformation( actualCustomerInfo );
+//    }
+//    private void updateCustomerBasicInformation(String... customerInfo ) {
+//        Customer guestCustomer = getSession().getCustomer();
+//        guestCustomer.updateCustomerBasicInfo( customerInfo );
+//    }
+//    private String[] processCustomerInformation(){
+////      TODO[]: allow user to go back and edit their entries
+////      TODO[x]: allow user to exit the App
+////      TODO[x]: refactor to use confirmSelection data field
+//
+//        String[] customerInputValues = new String[3];
+//        String customerFirstName;
+//        String customerLastName;
+//        String customerEmail;
+//
+//        boolean chooseToEdit = true;
+//
+//        do{
+//            System.out.print("Enter your first name: ");
+//            updateConfirmSelection();
+//            customerFirstName = getConfirmSelection();
+//
+//            System.out.print("Enter your last name: ");
+//            updateConfirmSelection();
+//            customerLastName = getConfirmSelection();
+//
+//            System.out.print("Enter your email: ");
+//            updateConfirmSelection();
+//            customerEmail = getConfirmSelection();
+//
+//            System.out.println( "\nYou entered " +
+//                    "\n name: " + customerLastName+", "+customerFirstName +
+//                    "\n email: " + customerEmail +
+//                    "\ndid we get that right? Yes/No" );
+//            updateConfirmSelection();
+//            String editChoice = getConfirmSelection().toUpperCase().substring(0);
+//            if( editChoice.equals("Y") ) chooseToEdit = false;
+//        }
+//        while( chooseToEdit );
+//
+//        customerInputValues[0] = customerFirstName;
+//        customerInputValues[1] = customerLastName;
+//        customerInputValues[2] = customerEmail;
+//
+//        return customerInputValues;
+//    }
 
 //    Accessor Methods
     public SubmenuMap getSubmenuMap() { return submenuMap; }

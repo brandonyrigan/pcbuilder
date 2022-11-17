@@ -1,8 +1,8 @@
 package com.pcbuilder.menus;
 
 import com.pcbuilder.session.Session;
-
-import static com.pcbuilder.menus.DecorateEnum.RENDER_BANNER_SUBMENU_UPDATE_PROFILE;
+import com.pcbuilder.menus.*;
+import static com.pcbuilder.menus.DecorateEnum.*;
 
 public class UpdateCustomerInfo_Submenu extends MainMenu {
 
@@ -11,7 +11,7 @@ public class UpdateCustomerInfo_Submenu extends MainMenu {
     @Override
     public void renderOwnMenu(){
         System.out.println( RENDER_BANNER_SUBMENU_UPDATE_PROFILE.getDecoration() );
-        processCustomerInformation();
+        session.getCustomer().updateCustomerBasicInfo(processCustomerInformation());
     }
 
     private String[] processCustomerInformation(){

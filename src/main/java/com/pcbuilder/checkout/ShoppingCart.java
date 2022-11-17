@@ -2,28 +2,31 @@ package com.pcbuilder.checkout;
 
 import com.pcbuilder.build.Build;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ShoppingCart {
-    double priceTotals = 100.00; // temporary hardcode
-    public List<Build> cartItems = new ArrayList<Build>();
+    Map<Integer, Build> cartItems = new HashMap<>();
+    private int buildCount = 1;
 
-    public ShoppingCart(){}
-
-    private void addToCart(Build built) {
-        cartItems.add(built);
+    public void addToCart(Build built) {
+        cartItems.put(buildCount, built);
+        buildCount++;
     }
 
-    public void removeFromCart(UUID builtId) {
-        for (Build built: cartItems) {
-            if (built.getBuildUUID() == builtId) {
-                cartItems.remove(builtId);
-            }
-        }
+    public void removeFromCart(int buildNumberSelected) {
+        cartItems.remove(buildNumberSelected);
     }
     public void cartSize() {
             System.out.println(cartItems.size());
+    }
+
+    public void showItemsInCart() {
+        for (Map.Entry<Integer, Build> build : cartItems.entrySet()) {
+            System.out.println("[" + build.getKey() + "]" + " " + build.getValue());
+        }
+    }
+
+    public Map<Integer, Build> getCartItems() {
+        return cartItems;
     }
 }
