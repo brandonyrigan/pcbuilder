@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class ShoppingCart {
-    List<Build> cartItems = new ArrayList<Build>();
+    public List<Build> cartItems = new ArrayList<Build>();
+
+    public ShoppingCart(){}
 
     private void addToCart(Build built) {
         cartItems.add(built);

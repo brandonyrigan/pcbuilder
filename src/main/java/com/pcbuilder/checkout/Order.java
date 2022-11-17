@@ -6,33 +6,44 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.pcbuilder.menus.DecorateEnum.RENDER_TXT_SPACE;
+import static com.pcbuilder.menus.DecorateEnum.RENDER_TXT_SPACEx2;
+
 public class Order {
 
-
-    private UUID orderId;
+    Customer customer;
     LocalDateTime dateCreatedOrder;
-//    LocalDateTime dateShipped;
+    private UUID orderId;
+    Map<String, String> sessionBuild;
+    ShoppingCart shoppingCart;
 
-
+    public Order(){}
     public Order( Customer customer, ShoppingCart shoppingCart, Map<String, String> sessionBuild  ){
         setOrderId();
         setDateCreatedOrder();
-        viewOrder( customer, shoppingCart, sessionBuild );
+        setCustomer( customer );
+        setShoppingCart( shoppingCart );
+        setSessionBuild( sessionBuild );
     }
 
 //  Business Logic
-    public void viewOrder(Customer customer, ShoppingCart shoppingCart, Map<String, String> sessionBuild ){
+    public void printSessionOrder(){
 
-//  TODO[ ] : process Shopping Cart details
+        String lastName = getCustomer().getLastName();
+        String firstName = getCustomer().getFirstName();
+        String email = getCustomer().getEmail();
+        String customerID = getCustomer().getEmail();
+        int shoppingCartSize = getShoppingCart().cartItems.size();
 
-        String space = "       ";
-        String doubleSpace = "       ";
         System.out.println();
-        System.out.println(space+"Session Order Details: " + customer.getLastName() +", " + customer.getFirstName() );
-        System.out.println(doubleSpace+"order id: " + getOrderId());
+        System.out.println(RENDER_TXT_SPACE.getDecoration()+"Session Details: " + lastName+ "," + firstName );
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"customer id: " + customerID);
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"customer email: " + email);
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"order id: " + getOrderId());
+        System.out.println(RENDER_TXT_SPACE.getDecoration()+"Session Build :  "  + getSessionBuild() );
+        System.out.println(RENDER_TXT_SPACE.getDecoration()+"Shopping Cart Details");
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Shopping Cart : [" + shoppingCartSize + "]" );
 
-        System.out.println(doubleSpace+"Shopping Cart : " + " items:  [  ] " );
-        System.out.println(doubleSpace+"Session Build :  " + sessionBuild );
     }
 
 
@@ -43,6 +54,12 @@ public class Order {
     public void setDateCreatedOrder() {
         this.dateCreatedOrder = LocalDateTime.now();
     }
+    public Customer getCustomer() { return customer; }
+    public void setCustomer(Customer customer) { this.customer = customer; }
+    public ShoppingCart getShoppingCart() { return shoppingCart; }
+    public void setShoppingCart(ShoppingCart shoppingCart) { this.shoppingCart = shoppingCart; }
+    public Map<String, String> getSessionBuild() { return sessionBuild; }
+    public void setSessionBuild(Map<String, String> sessionBuild) { this.sessionBuild = sessionBuild; }
 
 
 }

@@ -30,7 +30,7 @@ public class Session {
         setCustomer( customerInfo );
         setSessionBuild( new HashMap<>() );
         setShoppingCart( createNewShoppingCart() );
-        setOrder( null );
+        setOrder( new Order() );
         setUuid();
         setSessionStartDate();
         setSessionEndDate();
@@ -39,14 +39,17 @@ public class Session {
 
 //  Business Logic
     public void addBuildToCart(Build finalBuild) {
-    //ShoppingCart.addPCBuildToCart(finalBuild);
+//    ShoppingCart.addPCBuildToCart(finalBuild);
     System.out.println("Build added to cart");
 }
     public Checkout processOrder(){
+        Order order = getOrder();
+
         System.out.println( "Gathering your order details... " );
         System.out.println( "Beginning new checkout session... " );
         System.out.println( "Processing your order details... " );
-        Checkout newCheckoutSession = new Checkout(getOrder());
+        Checkout newCheckoutSession = new Checkout( order );
+
         return newCheckoutSession;
     }
     public Build composeBuild(Session sessionBuild) {
@@ -54,10 +57,10 @@ public class Session {
         return finalBuild;
     }
     public void createNewOrder(){
-        Customer sessionCustomer = getCustomer();
+        Customer customerSession = getCustomer();
         ShoppingCart sessionShoppingCart = getShoppingCart();
         Map<String, String> sessionBuild = getSessionBuild();
-        Order newOrder = new Order( sessionCustomer, sessionShoppingCart, sessionBuild );
+        Order newOrder = new Order( customerSession, sessionShoppingCart, sessionBuild );
         setOrder(newOrder);
     }
     public ShoppingCart createNewShoppingCart(){

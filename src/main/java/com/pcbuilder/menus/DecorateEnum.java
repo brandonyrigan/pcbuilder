@@ -4,6 +4,8 @@ package com.pcbuilder.menus;
  * Created by dev0 on 11/15/22.
  */
 public enum DecorateEnum {
+    RENDER_TXT_SPACE("  "),
+    RENDER_TXT_SPACEx2("    "),
     RENDER_SHORT_BAR("═════════════════════════════════════════════════"),
     RENDER_LONG_BAR("═══════════════════════════════════════════════════════════════════════════════════════════════════════════"),
     RENDER_DASHES("-------------------------------------------"),

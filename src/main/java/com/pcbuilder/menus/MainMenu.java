@@ -22,7 +22,7 @@ public class MainMenu extends Menu{
     protected Map<String, Double> currentBuildPrices = new HashMap<>();
 
 
-//TODO[ ] - Refactor: Constructor Injection > Setter Injection
+    //TODO[ ] - Refactor: Constructor Injection > Setter Injection
     public MainMenu( Session session, String... customerInfo ){
         setSession( session );
         setCustomerInfo( customerInfo );
@@ -31,11 +31,13 @@ public class MainMenu extends Menu{
         setSubmenuMap( submenuMap ); // Reactor to use Constructor Injection
     }
 
-
+//  TODO[]- FIX: NullPointerException, need an Optional
     @Override
     public void renderOwnMenu() {
+
         createSubmenus();
         updateGuestCustomerDetails();
+
         do{
 
             mainMenuHeader( getCustomerInfo() );
@@ -44,8 +46,7 @@ public class MainMenu extends Menu{
 
             updateUserSelection();
             Menu targetSubmenu = submenuMap.runSubmenu( getSelection() );
-//TODO[]- FIX: NullPointerException, need an Optional
-            targetSubmenu.renderOwnMenu();
+            targetSubmenu.renderOwnMenu(); // FIX: null pointer exception
 
         } while( getSelection() != 0 );
     }
@@ -75,6 +76,7 @@ public class MainMenu extends Menu{
         Scanner scanner = new Scanner(System.in);
         setConfirmSelection( scanner.nextLine() );
     }
+
 
 //  Build Methods
     protected void createBuild( ) {
@@ -121,6 +123,7 @@ public class MainMenu extends Menu{
         return df.format(total);
     }
 
+
 //  Customer Methods
     private void updateGuestCustomerDetails(){
         String[] actualCustomerInfo = processCustomerInformation();
@@ -131,9 +134,9 @@ public class MainMenu extends Menu{
         guestCustomer.updateCustomerBasicInfo( customerInfo );
     }
     private String[] processCustomerInformation(){
-//      TODO[]: allow user to go back and edit their entries
-//      TODO[x]: allow user to exit the App
-//      TODO[x]: refactor to use confirmSelection data field
+//      DONE[x]: allow user to go back and edit their entries
+//      DONE[x]: allow user to exit the App
+//      DONE[x]: refactor to use confirmSelection data field
 
         String[] customerInputValues = new String[3];
         String customerFirstName;
@@ -172,6 +175,7 @@ public class MainMenu extends Menu{
         return customerInputValues;
     }
 
+
 //    Accessor Methods
     public SubmenuMap getSubmenuMap() { return submenuMap; }
     public void setSubmenuMap(SubmenuMap submenuMap) { this.submenuMap = submenuMap; }
@@ -185,4 +189,6 @@ public class MainMenu extends Menu{
     public void setCustomerInfo(String[] customerInfo) { this.customerInfo = customerInfo; }
     public int getComponentCount() { return componentCount; }
     public void setComponentCount( int componentCount ) { this.componentCount = componentCount; }
+
+
 }

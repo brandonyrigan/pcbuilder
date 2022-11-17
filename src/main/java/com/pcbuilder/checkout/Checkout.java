@@ -3,8 +3,9 @@ package com.pcbuilder.checkout;
 public class Checkout {
 
     private Order order;
+//  Payment payment;
 
-    public Checkout(Order order ){
+    public Checkout( Order order ){
         setOrder(order);
     }
 
@@ -18,4 +19,8 @@ public class Checkout {
     public Order getOrder() { return this.order; }
     public void setOrder(Order order) { this.order = order; }
 
+}
+
+class Payment{
+    public Payment() {}
 }

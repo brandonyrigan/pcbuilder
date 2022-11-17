@@ -1,12 +1,20 @@
 package com.pcbuilder.menus;
-import com.pcbuilder.checkout.Checkout;
+import com.pcbuilder.checkout.Order;
+import com.pcbuilder.checkout.ShoppingCart;
 import com.pcbuilder.session.Session;
 
 import static com.pcbuilder.menus.DecorateEnum.*;
 
+//  TODO[ ] : process Shopping Cart details
+
 public class Order_Submenu extends MainMenu {
 
-    public Order_Submenu( Session session ) { super( session ); }
+    Boolean hasConfirmedOrder;
+
+    public Order_Submenu( Session session ) {
+        super( session );
+        setHasConfirmedOrder( false );
+    }
 
     @Override
     public void renderOwnMenu() {
@@ -19,45 +27,71 @@ public class Order_Submenu extends MainMenu {
         System.out.println( RENDER_SHORT_BAR.getDecoration() );
         System.out.println("View Order" );
         System.out.println("   Select from the options below");
-        System.out.println("   [1] Main Menu " + "[2] Update Payment Details "+ "[3] Confirm Order ");
+        System.out.println("   [1] Main Menu " + " [2] Create New Order" + " [3] Confirm Order "+ " [4] Proceed to Checkout ");
+        if( !getHasConfirmedOrder() ) messageUserHasNoConfirmedOrders();
     }
     private void runOrderWalkThrough(){
 //TODO[ ] : Refactor switch case
-        Session session = getSession();
-        session.createNewOrder();
-        session.getOrder();
-
+        Order order = getSession().getOrder();
+        if( getHasConfirmedOrder() ) order.printSessionOrder();
         updateUserSelection();
         do{
             switch ( getSelection() ){
-                case 1:
-                    System.out.println( "to Main Menu" );
-                    break;
+                case 1: break;
                 case 2:
-                    System.out.println( "Update Payment Details" );
-                    updateUserSelection();
+                    createNewOrder();
                     break;
                 case 3:
-                    System.out.println( "Confirm Order" );
                     processCustomerOrder();
+                    break;
+                case 4 :
+                    proceedToPurchase();
                     break;
                 default: break;
             }
         } while ( getSelection() != 1 );
+
     }
 
 
     //  Process the Order Menu
     private void processCustomerOrder() {
-        System.out.println( "Finalizing build... " );
-        System.out.println( "Congratulations your PC Build is complete! " );
-
-        Session session = getSession();
-
-        Checkout checkoutSession = session.processOrder();
-        checkoutSession.processPayment();
+        System.out.println(getHasConfirmedOrder());
+        if( !getHasConfirmedOrder() ) messageUserHasNoConfirmedOrders();
+        else{
+            System.out.println( "Thank You, Initiating Confirmation..." );
+            System.out.println( "Fetching order details..." );
+            System.out.println( "Validating order details..." );
+            System.out.println( "Order Confirmation  complete...Thank you." );
+        }
         updateUserSelection();
     }
+    private void createNewOrder(){
+        int shoppingCartSize = getSession().getShoppingCart().cartItems.size();
 
+        if( shoppingCartSize < 1 ) messageUserHasEmptyCart();
+        else{
+            Session session = getSession();
+            session.createNewOrder();
+            setHasConfirmedOrder( true );
+        }
+        updateUserSelection();
+    };
+    private void proceedToPurchase(){
+        if( getHasConfirmedOrder() ) setSelection(1);
+        else System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Cannot Checkout on an Empty Cart, Nothing to Purchase " );
+        updateUserSelection();
+    }
+    private void messageUserHasNoConfirmedOrders(){
+        System.out.println();
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Sorry, cannot create new order on an Empty Cart " );
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Please, continue shopping to Create a New Order, Thank You. " );
+    }
+    private void messageUserHasEmptyCart(){
+        System.out.println();
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Sorry, No Items Found in Your ShoppingCart." );
+    }
 
+    protected Boolean getHasConfirmedOrder() { return hasConfirmedOrder; }
+    protected void setHasConfirmedOrder(Boolean hasConfirmedOrder) { this.hasConfirmedOrder = hasConfirmedOrder; }
 }

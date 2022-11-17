@@ -186,8 +186,8 @@ private void renderMenu(){
     }
     private String[] processCustomerInformation(){
 //      TODO[]: allow user to go back and edit their entries
-//      TODO[x]: allow user to exit the App
-//      TODO[x]: refactor to use confirmSelection data field
+//      DONE[x]: allow user to exit the App
+//      DONE[x]: refactor to use confirmSelection data field
 
         System.out.println( "Update Customer Information" );
         String[] customerInputValues = new String[3];
@@ -350,8 +350,8 @@ private void renderMenu(){
     }
     private void runOrderWalkThrough( Session session ){
 
-        session.createNewOrder();
-        session.getOrder();
+//        session.createNewOrder();
+//        session.getOrder();
 
         updateUserSelection();
         do{

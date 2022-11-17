@@ -3,9 +3,9 @@ package com.pcbuilder.client;
 import com.pcbuilder.menus.RenderMenusUI;
 
 // TODO [ ] - Refactor: WalkThroughUI (not needed)
-    // TODO [X] - replace with RenderMenusUI
-    // TODO [X] - add abstract Menu and implement MainMenu with renderOwnMenu
-    // TODO [X] - extend submenus from MainMenu Parent Class and implement Override renderOwnMenu
+    // DONE [X] - replace with RenderMenusUI
+    // DONE [X] - add abstract Menu and implement MainMenu with renderOwnMenu
+    // DONE [X] - extend submenus from MainMenu Parent Class and implement Override renderOwnMenu
 
 //DONE Step 0: Greet and Process Customer
 //  DONE[x] Welcome the User and Capture Customer Info
