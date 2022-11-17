@@ -39,7 +39,7 @@ public class Session {
 
 //  Business Logic
     public void addBuildToCart(Build finalBuild) {
-    //ShoppingCart.addPCBuildToCart(finalBuild);
+    shoppingCart.addToCart(finalBuild);
     System.out.println("Build added to cart");
 }
     public Checkout processOrder(){

@@ -15,7 +15,7 @@ public class PCComponents_SubMenu extends MainMenu {
 
     @Override
     public void renderOwnMenu() {
-        System.out.println( "SHOPPING CART SUBMENU" );
+        System.out.println( "PC Component Selector" );
         renderSubmenuPCComponentsMenu();
         runPCComponentsSubmenu();
     }
@@ -24,7 +24,7 @@ public class PCComponents_SubMenu extends MainMenu {
     private void renderSubmenuPCComponentsMenu(){
 
         System.out.println("   Select which component you would like to view an inventory for");
-        System.out.println("   [9] Return to Main Menu " );
+        System.out.println("   [9] Return to Main Menu  [0] Shopping Cart" );
 
         Session session = getSession();
         Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
@@ -42,6 +42,10 @@ public class PCComponents_SubMenu extends MainMenu {
             Session session = getSession();
             Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
             Collection<Component> targetCollection = null;
+
+            if (componentCount == 8) {
+                displayBuildCompleteMessage();
+            }
 
             updateUserSelection();
             switch ( getSelection() ) {
@@ -80,6 +84,9 @@ public class PCComponents_SubMenu extends MainMenu {
                 case 9:
                     System.out.println();
                     break;
+                case 0:
+                    Menu targetSubmenu = new ShoppingCart_Submenu( session );
+                    targetSubmenu.renderOwnMenu();
                 default:
                     break;
             }
