@@ -64,7 +64,7 @@ public class MainMenu extends Menu{
                 "  [1] PC Builder " +
                 "  [2] Shopping Cart " +
                 "  [3] View Order " +
-                "  [4] Purchase"+
+                "  [4] Checkout"+
                 "  [5] Update Customer Information "
         );
     }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class ShoppingCart {
+    double priceTotals = 100.00; // temporary hardcode
     public List<Build> cartItems = new ArrayList<Build>();
 
     public ShoppingCart(){}

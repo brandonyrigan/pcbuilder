@@ -378,8 +378,8 @@ private void renderMenu(){
         System.out.println( "Finalizing build... " );
         System.out.println( "Congratulations your PC Build is complete! " );
 
-        Checkout checkoutSession = session.processOrder();
-        checkoutSession.processPayment();
+//        Checkout checkoutSession = session.createNewCheckoutSession();
+//        checkoutSession.processPayment();
         updateUserSelection();
     }
 

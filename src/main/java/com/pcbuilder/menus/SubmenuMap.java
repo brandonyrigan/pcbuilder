@@ -21,7 +21,7 @@ public class SubmenuMap {
         mapSubmenus.put( 1, new PCComponents_SubMenu( session ) );
         mapSubmenus.put( 2, new ShoppingCart_Submenu( session ) );
         mapSubmenus.put( 3, new Order_Submenu( session ) );
-        mapSubmenus.put( 4, new Purchase_Submenu( session ) );
+        mapSubmenus.put( 4, new Checkout_Submenu( session ) );
         mapSubmenus.put( 5, new UpdateCustomerInfo_Submenu( session ) );
 
         setSubmenuMap( mapSubmenus );
