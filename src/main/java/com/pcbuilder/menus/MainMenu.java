@@ -36,13 +36,9 @@ public class MainMenu extends Menu{
     @Override
     public void renderOwnMenu() {
         createSubmenus();
-        updateGuestCustomerDetails();
         do{
-
-            mainMenuHeader( getCustomerInfo() );
+            mainMenuHeader();
             renderCurrentSessionBuild();
-            if ( getComponentCount() == 8 ) { createBuild(); }
-
             updateUserSelection();
             Menu targetSubmenu = submenuMap.runSubmenu( getSelection() );
 //TODO[]- FIX: NullPointerException, need an Optional
@@ -57,9 +53,11 @@ public class MainMenu extends Menu{
         SubmenuMap submenuMap = getSubmenuMap();
         submenuMap.createSubmenus();
     }
-    private void mainMenuHeader(String... customerInfo){
+    private void mainMenuHeader(){
+        String firstName = session.getCustomer().getFirstName();
+        String lastName = session.getCustomer().getLastName();
         System.out.println( RENDER_BAR.getDecoration() );
-        System.out.println( " Customer:  " + customerInfo[1] + ", "+ customerInfo[0] );
+        System.out.println( " Customer:  " + firstName + ", "+ lastName );
         System.out.println(" MENU: " +
                 "  [1] PC Builder " +
                 "  [2] Shopping Cart " +
@@ -80,11 +78,8 @@ public class MainMenu extends Menu{
 //  Build Methods
     protected void createBuild( ) {
         Session session = getSession();
-        displayBuildCompleteMessage();
         Build build = session.composeBuild( session );
-        System.out.println("test"+build);
         session.addBuildToCart(build);
-        setComponentCount( 0 );
     }
     protected void renderCurrentSessionBuild(){
         Session session = getSession();
@@ -109,6 +104,7 @@ public class MainMenu extends Menu{
 
     }
     protected void displayBuildCompleteMessage() {
+        System.out.println( RENDER_BAR.getDecoration());
         System.out.println("Build is complete! All 8 components have been selected. Please go to shopping cart to complete order.");
         System.out.println( RENDER_BAR.getDecoration() );
     }
@@ -119,57 +115,6 @@ public class MainMenu extends Menu{
             total += price.getValue();
         }
         return df.format(total);
-    }
-
-//  Customer Methods
-    private void updateGuestCustomerDetails(){
-        String[] actualCustomerInfo = processCustomerInformation();
-        updateCustomerBasicInformation( actualCustomerInfo );
-    }
-    private void updateCustomerBasicInformation(String... customerInfo ) {
-        Customer guestCustomer = getSession().getCustomer();
-        guestCustomer.updateCustomerBasicInfo( customerInfo );
-    }
-    private String[] processCustomerInformation(){
-//      TODO[]: allow user to go back and edit their entries
-//      TODO[x]: allow user to exit the App
-//      TODO[x]: refactor to use confirmSelection data field
-
-        String[] customerInputValues = new String[3];
-        String customerFirstName;
-        String customerLastName;
-        String customerEmail;
-
-        boolean chooseToEdit = true;
-
-        do{
-            System.out.print("Enter your first name: ");
-            updateConfirmSelection();
-            customerFirstName = getConfirmSelection();
-
-            System.out.print("Enter your last name: ");
-            updateConfirmSelection();
-            customerLastName = getConfirmSelection();
-
-            System.out.print("Enter your email: ");
-            updateConfirmSelection();
-            customerEmail = getConfirmSelection();
-
-            System.out.println( "\nYou entered " +
-                    "\n name: " + customerLastName+", "+customerFirstName +
-                    "\n email: " + customerEmail +
-                    "\ndid we get that right? Yes/No" );
-            updateConfirmSelection();
-            String editChoice = getConfirmSelection().toUpperCase().substring(0);
-            if( editChoice.equals("Y") ) chooseToEdit = false;
-        }
-        while( chooseToEdit );
-
-        customerInputValues[0] = customerFirstName;
-        customerInputValues[1] = customerLastName;
-        customerInputValues[2] = customerEmail;
-
-        return customerInputValues;
     }
 
 //    Accessor Methods

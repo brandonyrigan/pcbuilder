@@ -10,7 +10,7 @@ public class UpdateCustomerInfo_Submenu extends MainMenu {
     @Override
     public void renderOwnMenu(){
         System.out.println( "Update Customer Information" );
-        processCustomerInformation();
+        session.getCustomer().updateCustomerBasicInfo(processCustomerInformation());
     }
 
     private String[] processCustomerInformation(){
