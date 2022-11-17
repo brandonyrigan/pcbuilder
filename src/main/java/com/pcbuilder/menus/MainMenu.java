@@ -2,7 +2,6 @@ package com.pcbuilder.menus;
 
 import static com.pcbuilder.menus.DecorateEnum.*;
 import com.pcbuilder.build.Build;
-import com.pcbuilder.customer.Customer;
 import com.pcbuilder.session.Session;
 
 import java.text.DecimalFormat;
@@ -21,6 +20,7 @@ public class MainMenu extends Menu{
 
 
     //TODO[ ] - Refactor: Constructor Injection > Setter Injection
+    public MainMenu(){}
     public MainMenu( Session session, String... customerInfo ){
         setSession( session );
         setCustomerInfo( customerInfo );
@@ -39,7 +39,6 @@ public class MainMenu extends Menu{
             updateUserSelection();
             Menu targetSubmenu = submenuMap.runSubmenu( getSelection() );
             targetSubmenu.renderOwnMenu();
-
         } while( getSelection() != 0 );
     }
 
@@ -59,7 +58,8 @@ public class MainMenu extends Menu{
                 "  [2] Shopping Cart " +
                 "  [3] View Order " +
                 "  [4] Checkout"+
-                "  [5] Update Customer Information "
+                "  [5] Update Customer Information "+
+                "  [0] Exit "
         );
     }
     protected void updateUserSelection(){
@@ -77,6 +77,7 @@ public class MainMenu extends Menu{
         Session session = getSession();
         Build build = session.composeBuild( session );
         session.addBuildToCart(build);
+        session.setSessionBuildPrice( currentBuildPrices );
     }
     protected void renderCurrentSessionBuild(){
         Session session = getSession();
@@ -84,6 +85,10 @@ public class MainMenu extends Menu{
         String categoryName = "";
         String componentName = "";
         String[] componentInfo = new String[]{};
+        System.out.println(  );
+
+        session.setSessionBuildPrice( currentBuildPrices );
+        System.out.println( getSession().getSessionBuildPrice() );
 
         System.out.println( "Current Build " );
         for( Map.Entry<String, String> entries : sessionBuild.entrySet() ){
@@ -95,6 +100,7 @@ public class MainMenu extends Menu{
 
         System.out.println("Build Progress: " + getComponentCount() + "/8");
         System.out.println( RENDER_LONG_BAR.getDecoration() );
+
         if (!currentBuildPrices.isEmpty()) {
             System.out.println("Current Total Build Price: $" + calculateCurrentTotalBuildPrice());
         }
@@ -114,56 +120,6 @@ public class MainMenu extends Menu{
         return df.format(total);
     }
 
-////  Customer Methods
-//    private void updateGuestCustomerDetails(){
-//        String[] actualCustomerInfo = processCustomerInformation();
-//        updateCustomerBasicInformation( actualCustomerInfo );
-//    }
-//    private void updateCustomerBasicInformation(String... customerInfo ) {
-//        Customer guestCustomer = getSession().getCustomer();
-//        guestCustomer.updateCustomerBasicInfo( customerInfo );
-//    }
-//    private String[] processCustomerInformation(){
-////      TODO[]: allow user to go back and edit their entries
-////      TODO[x]: allow user to exit the App
-////      TODO[x]: refactor to use confirmSelection data field
-//
-//        String[] customerInputValues = new String[3];
-//        String customerFirstName;
-//        String customerLastName;
-//        String customerEmail;
-//
-//        boolean chooseToEdit = true;
-//
-//        do{
-//            System.out.print("Enter your first name: ");
-//            updateConfirmSelection();
-//            customerFirstName = getConfirmSelection();
-//
-//            System.out.print("Enter your last name: ");
-//            updateConfirmSelection();
-//            customerLastName = getConfirmSelection();
-//
-//            System.out.print("Enter your email: ");
-//            updateConfirmSelection();
-//            customerEmail = getConfirmSelection();
-//
-//            System.out.println( "\nYou entered " +
-//                    "\n name: " + customerLastName+", "+customerFirstName +
-//                    "\n email: " + customerEmail +
-//                    "\ndid we get that right? Yes/No" );
-//            updateConfirmSelection();
-//            String editChoice = getConfirmSelection().toUpperCase().substring(0);
-//            if( editChoice.equals("Y") ) chooseToEdit = false;
-//        }
-//        while( chooseToEdit );
-//
-//        customerInputValues[0] = customerFirstName;
-//        customerInputValues[1] = customerLastName;
-//        customerInputValues[2] = customerEmail;
-//
-//        return customerInputValues;
-//    }
 
 //    Accessor Methods
     public SubmenuMap getSubmenuMap() { return submenuMap; }
@@ -178,8 +134,5 @@ public class MainMenu extends Menu{
     public void setCustomerInfo(String[] customerInfo) { this.customerInfo = customerInfo; }
     public int getComponentCount() { return componentCount; }
     public void setComponentCount( int componentCount ) { this.componentCount = componentCount; }
-    public Map<String, Double> getCurrentBuildPrices() { return currentBuildPrices; }
-
-    public void setCurrentBuildPrices(Map<String, Double> currentBuildPrices) { this.currentBuildPrices = currentBuildPrices; }
 
 }

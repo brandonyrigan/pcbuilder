@@ -98,7 +98,6 @@ public class PCComponents_SubMenu extends MainMenu {
         int selectionCounter = 1;
         String componentId = "";
         String componentName = "";
-//  TODO[ ]- FIX: NUllPointerException
         String[] holdComponentNameAndId = new String[ targetCollection.size() +1 ];
 
         System.out.println(RENDER_SHORT_BAR.getDecoration());
@@ -150,7 +149,7 @@ public class PCComponents_SubMenu extends MainMenu {
         }
         while( chooseToEdit );
 
-        currentBuildPrices.put(collectionName, componentPrices[getSelection()]);
+        currentBuildPrices.put( collectionName, componentPrices[ getSelection() ]);
 
         return targetComponentNameAndId;
     }

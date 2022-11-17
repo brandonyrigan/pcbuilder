@@ -42,7 +42,9 @@ public class Order {
         Integer optionalShoppingCartSize = Optional.of( getShoppingCart().getCartItems().size() ).orElse(0);
         String optionalOrderId = Optional.of( getOrderId().toString() ).orElse("no order uuid");
         Map<String, String> optionalSessionBuild = Optional.of( getSessionBuild() ).orElse( new HashMap<>() );
+
         Map<String, Double> optionalSubTotals = Optional.of( getCurrentBuildPrice() ).orElse( new HashMap<>() );
+        System.out.println( getCurrentBuildPrice() );
         Double totals = calcTotalFromSubTotals( getCurrentBuildPrice() );
 
         System.out.println();
@@ -64,16 +66,22 @@ public class Order {
 
     private Double calcTotalFromSubTotals( Map<String, Double> subTotals ){
         Double totals = 0.0;
-
-        Optional<Map<String, Double>> optionalSubTotals = Optional.ofNullable(subTotals);
-
-        if ( optionalSubTotals.isPresent() ) {
-
-            Map<String, Double> stringDoubleMap = optionalSubTotals.get();
-            for (Map.Entry<String, Double> entry : stringDoubleMap.entrySet()) {
-                totals += entry.getValue();
-            }
+        System.out.println( subTotals );
+        for (Map.Entry<String, Double> entry : subTotals.entrySet()) {
+            System.out.println(entry);
+            totals += entry.getValue();
         }
+                    System.out.println( "totals from for loop" + totals );
+
+//        Optional<Map<String, Double>> optionalSubTotals = Optional.ofNullable(subTotals);
+
+//        if ( optionalSubTotals.isPresent() ) {
+//
+//            Map<String, Double> stringDoubleMap = optionalSubTotals.get();
+//            for (Map.Entry<String, Double> entry : stringDoubleMap.entrySet()) {
+//                totals += entry.getValue();
+//            }
+//        }
         return totals;
 
     }
