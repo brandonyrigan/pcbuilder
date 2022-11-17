@@ -4,10 +4,9 @@ import com.pcbuilder.inventory.Component;
 import com.pcbuilder.session.Session;
 import java.util.Collection;
 import java.util.Map;
-import static com.pcbuilder.menus.IDecorate.*;
+import static com.pcbuilder.menus.DecorateEnum.*;
 
 public class PCComponents_SubMenu extends MainMenu {
-
 
     public PCComponents_SubMenu( Session session ) {
         super(session);
@@ -15,14 +14,13 @@ public class PCComponents_SubMenu extends MainMenu {
 
     @Override
     public void renderOwnMenu() {
-        System.out.println( "PC Component Selector" );
         renderSubmenuPCComponentsMenu();
         runPCComponentsSubmenu();
     }
 
     //  PC Builder Submenu
     private void renderSubmenuPCComponentsMenu(){
-
+        System.out.println( RENDER_BANNER_SUBMENU_PCCOMPONENTS.getDecoration() );
         System.out.println("   Select which component you would like to view an inventory for");
         System.out.println("   [9] Return to Main Menu  [0] Shopping Cart" );
 
@@ -100,10 +98,10 @@ public class PCComponents_SubMenu extends MainMenu {
         int selectionCounter = 1;
         String componentId = "";
         String componentName = "";
-//  TODO[ ]- FIX: NUllPointerException
         String[] holdComponentNameAndId = new String[ targetCollection.size() +1 ];
+
+        System.out.println(RENDER_SHORT_BAR.getDecoration());
         Double[] holdComponentPrices = new Double[targetCollection.size() + 1];
-        System.out.println(RENDER_BAR.getDecoration());
         System.out.printf("%-5s | %-53s | %-10s | %-10s | %-20s ", "SELECT", collectionName , "PRICE", "RATING", "DESCRIPTION");
         System.out.println();
         System.out.println(RENDER_DASHES.getDecoration());
@@ -121,7 +119,7 @@ public class PCComponents_SubMenu extends MainMenu {
             selectionCounter++;
             System.out.println();
         }
-        System.out.println(RENDER_BAR.getDecoration());
+        System.out.println(RENDER_LONG_BAR.getDecoration());
 //
         String componentNameAndId = customerComponentSelection( collectionName, holdComponentPrices, holdComponentNameAndId );
 
@@ -151,7 +149,7 @@ public class PCComponents_SubMenu extends MainMenu {
         }
         while( chooseToEdit );
 
-        currentBuildPrices.put(collectionName, componentPrices[getSelection()]);
+        currentBuildPrices.put( collectionName, componentPrices[ getSelection() ]);
 
         return targetComponentNameAndId;
     }

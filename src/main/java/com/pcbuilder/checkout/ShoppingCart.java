@@ -5,7 +5,7 @@ import com.pcbuilder.build.Build;
 import java.util.*;
 
 public class ShoppingCart {
-    Map<Integer, Build> cartItems = new HashMap<>();
+    public Map<Integer, Build> cartItems = new HashMap<>();
     private int buildCount = 1;
 
     public void addToCart(Build built) {

@@ -19,8 +19,11 @@ public class Session {
 
     public Build finalBuild;
     private Customer customer;
+    private Checkout checkout;
     private LocalDate sessionStart, sessionEnd;
     public Map<String,String> sessionBuild;
+    public Map<String,Double> sessionBuildPrice;
+
     private Order order;
     private ShoppingCart shoppingCart;
     private UUID uuid;
@@ -28,9 +31,11 @@ public class Session {
 
     public Session( String[] customerInfo ) {
         setCustomer( customerInfo );
+        setCheckout( new Checkout() );
         setSessionBuild( new HashMap<>() );
+        setSessionBuildPrice(new HashMap<>());
         setShoppingCart( createNewShoppingCart() );
-        setOrder( null );
+        setOrder( new Order() );
         setUuid();
         setSessionStartDate();
         setSessionEndDate();
@@ -42,22 +47,28 @@ public class Session {
     shoppingCart.addToCart(finalBuild);
     System.out.println("Build added to cart");
 }
-    public Checkout processOrder(){
+    public void createNewCheckoutSession(){
+        Order order = getOrder();
+
         System.out.println( "Gathering your order details... " );
         System.out.println( "Beginning new checkout session... " );
         System.out.println( "Processing your order details... " );
-        Checkout newCheckoutSession = new Checkout(getOrder());
-        return newCheckoutSession;
+
+        Checkout newCheckoutSession = new Checkout( order );
+        setCheckout( newCheckoutSession );
     }
-    public Build composeBuild(Session sessionBuild) {
+    public Build composeBuild( Session sessionBuild ) {
         finalBuild = BuildFactory.createBuild( sessionBuild );
         return finalBuild;
     }
     public void createNewOrder(){
-        Customer sessionCustomer = getCustomer();
+        Customer customerSession = getCustomer();
         ShoppingCart sessionShoppingCart = getShoppingCart();
         Map<String, String> sessionBuild = getSessionBuild();
-        Order newOrder = new Order( sessionCustomer, sessionShoppingCart, sessionBuild );
+        Map<String, Double> sessionBuildPrice = getSessionBuildPrice();
+        System.out.println( "@Session " + getSessionBuildPrice());
+        Order newOrder = new Order( customerSession, sessionShoppingCart, sessionBuild, sessionBuildPrice );
+
         setOrder(newOrder);
     }
     public ShoppingCart createNewShoppingCart(){
@@ -103,6 +114,9 @@ public class Session {
     public void setShoppingCart(ShoppingCart shoppingCart) { this.shoppingCart = shoppingCart; }
     public Map<String, String> getSessionBuild() { return sessionBuild;}
     public void setSessionBuild(Map<String, String> sessionBuild) { this.sessionBuild = sessionBuild; }
+    public Checkout getCheckout() { return checkout; }
+    public void setCheckout(Checkout checkout) { this.checkout = checkout; }
 
-
+    public Map<String, Double> getSessionBuildPrice() { return sessionBuildPrice; }
+    public void setSessionBuildPrice(Map<String, Double> sessionBuildPrice) { this.sessionBuildPrice = sessionBuildPrice; }
 }

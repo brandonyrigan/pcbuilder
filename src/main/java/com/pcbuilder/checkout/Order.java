@@ -3,38 +3,93 @@ package com.pcbuilder.checkout;
 import com.pcbuilder.customer.Customer;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
+import static com.pcbuilder.menus.DecorateEnum.RENDER_TXT_SPACE;
+import static com.pcbuilder.menus.DecorateEnum.RENDER_TXT_SPACEx2;
+
+// Store All Session Details
+
 public class Order {
-
-
-    private UUID orderId;
+// TODO[ ] - get totals and add to order
+    Customer customer;
     LocalDateTime dateCreatedOrder;
-//    LocalDateTime dateShipped;
+    private UUID orderId;
+    Map<String, String> sessionBuild;
+    Map<String, Double> currentBuildPrice;
+    ShoppingCart shoppingCart;
 
-
-    public Order( Customer customer, ShoppingCart shoppingCart, Map<String, String> sessionBuild  ){
+    public Order(){}
+    public Order( Customer customer, ShoppingCart shoppingCart, Map<String, String> sessionBuild, Map<String, Double> currentBuildPrices){
         setOrderId();
         setDateCreatedOrder();
-        viewOrder( customer, shoppingCart, sessionBuild );
+        setCustomer( customer );
+        setShoppingCart( shoppingCart );
+        setSessionBuild( sessionBuild );
+        setCurrentBuildPrice( currentBuildPrices );
     }
 
 //  Business Logic
-    public void viewOrder(Customer customer, ShoppingCart shoppingCart, Map<String, String> sessionBuild ){
+    public void printSessionOrder(){
 
-//  TODO[ ] : process Shopping Cart details
+        String optionalLastName = Optional.of( getCustomer().getLastName() ).orElse("no last");
+        String optionalFirstName = Optional.of( getCustomer().getFirstName() ).orElse("no last");
+        String optionalEmail = Optional.of( getCustomer().getEmail() ).orElse("no email");
+        String optionalCustomerId = Optional.of( getCustomer().getCustomerUUID().toString() ).orElse( "no customer uuid" );
+        Integer optionalShoppingCartSize = Optional.of( getShoppingCart().getCartItems().size() ).orElse(0);
+        String optionalOrderId = Optional.of( getOrderId().toString() ).orElse("no order uuid");
+        Map<String, String> optionalSessionBuild = Optional.of( getSessionBuild() ).orElse( new HashMap<>() );
 
-        String space = "       ";
-        String doubleSpace = "       ";
+        Map<String, Double> optionalSubTotals = Optional.of( getCurrentBuildPrice() ).orElse( new HashMap<>() );
+        System.out.println( getCurrentBuildPrice() );
+        Double totals = calcTotalFromSubTotals( getCurrentBuildPrice() );
+
         System.out.println();
-        System.out.println(space+"Session Order Details: " + customer.getLastName() +", " + customer.getFirstName() );
-        System.out.println(doubleSpace+"order id: " + getOrderId());
+        System.out.println(RENDER_TXT_SPACE.getDecoration()+"Customer Details: " + optionalLastName + "," + optionalFirstName );
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"customer id: " + optionalCustomerId );
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"customer email: " + optionalEmail );
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"order id: " + optionalOrderId) ;
 
-        System.out.println(doubleSpace+"Shopping Cart : " + " items:  [  ] " );
-        System.out.println(doubleSpace+"Session Build :  " + sessionBuild );
+        System.out.println(RENDER_TXT_SPACE.getDecoration()+"Session Build :  ");
+        renderSessionBuild(optionalSessionBuild);
+
+        System.out.println(RENDER_TXT_SPACE.getDecoration()+"Shopping Cart Details");
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Shopping Cart : [" + optionalShoppingCartSize + "]" );
+
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"SubTotal: " + optionalSubTotals );
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Total: " + totals);
+
     }
 
+    private Double calcTotalFromSubTotals( Map<String, Double> subTotals ){
+        Double totals = 0.0;
+        System.out.println( subTotals );
+        for (Map.Entry<String, Double> entry : subTotals.entrySet()) {
+            System.out.println(entry);
+            totals += entry.getValue();
+        }
+                    System.out.println( "totals from for loop" + totals );
+
+//        Optional<Map<String, Double>> optionalSubTotals = Optional.ofNullable(subTotals);
+
+//        if ( optionalSubTotals.isPresent() ) {
+//
+//            Map<String, Double> stringDoubleMap = optionalSubTotals.get();
+//            for (Map.Entry<String, Double> entry : stringDoubleMap.entrySet()) {
+//                totals += entry.getValue();
+//            }
+//        }
+        return totals;
+
+    }
+    private void renderSessionBuild(Map<String, String> optionalSessionBuild){
+        for (Map.Entry<String, String> entry : optionalSessionBuild.entrySet()){
+            System.out.println(RENDER_TXT_SPACEx2.getDecoration()+ "["+ entry.getKey()+ "] "+": "+ entry.getValue()  );
+        }
+    }
 
 //  Accessor Methods
     public UUID getOrderId() { return orderId; }
@@ -43,6 +98,13 @@ public class Order {
     public void setDateCreatedOrder() {
         this.dateCreatedOrder = LocalDateTime.now();
     }
-
-
+//    public Customer getCustomer() { return customer; }
+    public Customer getCustomer() { return this.customer; }
+    public void setCustomer(Customer customer) { this.customer = customer; }
+    public ShoppingCart getShoppingCart() { return shoppingCart; }
+    public void setShoppingCart(ShoppingCart shoppingCart) { this.shoppingCart = shoppingCart; }
+    public Map<String, String> getSessionBuild() { return sessionBuild; }
+    public void setSessionBuild(Map<String, String> sessionBuild) { this.sessionBuild = sessionBuild; }
+    public Map<String, Double> getCurrentBuildPrice() { return currentBuildPrice; }
+    public void setCurrentBuildPrice(Map<String, Double> currentBuildPrice) { this.currentBuildPrice = currentBuildPrice; }
 }

@@ -4,20 +4,19 @@ import com.pcbuilder.checkout.ShoppingCart;
 import com.pcbuilder.inventory.Component;
 import com.pcbuilder.menus.MainMenu;
 import com.pcbuilder.session.Session;
-
 import java.util.Collection;
 import java.util.Map;
 
-/**
- * Created by dev0 on 11/15/22.
- */
+import static com.pcbuilder.menus.DecorateEnum.RENDER_BANNER_SUBMENU_SHOPPINGCART;
+
+
 public class ShoppingCart_Submenu extends MainMenu {
 
     public ShoppingCart_Submenu(Session session) { super(session); }
 
     @Override
     public void renderOwnMenu() {
-        System.out.println( "SHOPPING CART" );
+        System.out.println( RENDER_BANNER_SUBMENU_SHOPPINGCART.getDecoration() );
         renderCurrentSessionBuild();
         renderSubmenuShoppingCartMenu();
     }

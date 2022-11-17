@@ -3,8 +3,6 @@ package com.pcbuilder.inventory;
 import java.util.*;
 
 public final class Inventory {
-// TODO: implement singleton
-// TODO: Components should hava unique id
 
     public static Map<String, Collection<Component>> mapOfInventory = new HashMap<>();
 

@@ -1,15 +1,11 @@
 package com.pcbuilder.menus;
 
-import static com.pcbuilder.menus.IDecorate.*;
+import static com.pcbuilder.menus.DecorateEnum.*;
 import com.pcbuilder.build.Build;
-import com.pcbuilder.customer.Customer;
 import com.pcbuilder.session.Session;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class MainMenu extends Menu{
 
@@ -23,7 +19,8 @@ public class MainMenu extends Menu{
     protected Map<String, Double> currentBuildPrices = new HashMap<>();
 
 
-//TODO[ ] - Refactor: Constructor Injection > Setter Injection
+    //TODO[ ] - Refactor: Constructor Injection > Setter Injection
+    public MainMenu(){}
     public MainMenu( Session session, String... customerInfo ){
         setSession( session );
         setCustomerInfo( customerInfo );
@@ -32,7 +29,7 @@ public class MainMenu extends Menu{
         setSubmenuMap( submenuMap ); // Reactor to use Constructor Injection
     }
 
-
+    //TODO[]- FIX: NullPointerException, need an Optional
     @Override
     public void renderOwnMenu() {
         createSubmenus();
@@ -41,9 +38,7 @@ public class MainMenu extends Menu{
             renderCurrentSessionBuild();
             updateUserSelection();
             Menu targetSubmenu = submenuMap.runSubmenu( getSelection() );
-//TODO[]- FIX: NullPointerException, need an Optional
             targetSubmenu.renderOwnMenu();
-
         } while( getSelection() != 0 );
     }
 
@@ -56,14 +51,15 @@ public class MainMenu extends Menu{
     private void mainMenuHeader(){
         String firstName = session.getCustomer().getFirstName();
         String lastName = session.getCustomer().getLastName();
-        System.out.println( RENDER_BAR.getDecoration() );
+        System.out.println( RENDER_BANNER_MENU_MAINMENU.getDecoration() );
         System.out.println( " Customer:  " + firstName + ", "+ lastName );
         System.out.println(" MENU: " +
                 "  [1] PC Builder " +
                 "  [2] Shopping Cart " +
                 "  [3] View Order " +
-                "  [4] Purchase"+
-                "  [5] Update Customer Information "
+                "  [4] Checkout"+
+                "  [5] Update Customer Information "+
+                "  [0] Exit "
         );
     }
     protected void updateUserSelection(){
@@ -75,11 +71,13 @@ public class MainMenu extends Menu{
         setConfirmSelection( scanner.nextLine() );
     }
 
+
 //  Build Methods
     protected void createBuild( ) {
         Session session = getSession();
         Build build = session.composeBuild( session );
         session.addBuildToCart(build);
+        session.setSessionBuildPrice( currentBuildPrices );
     }
     protected void renderCurrentSessionBuild(){
         Session session = getSession();
@@ -87,6 +85,10 @@ public class MainMenu extends Menu{
         String categoryName = "";
         String componentName = "";
         String[] componentInfo = new String[]{};
+        System.out.println(  );
+
+        session.setSessionBuildPrice( currentBuildPrices );
+        System.out.println( getSession().getSessionBuildPrice() );
 
         System.out.println( "Current Build " );
         for( Map.Entry<String, String> entries : sessionBuild.entrySet() ){
@@ -97,16 +99,17 @@ public class MainMenu extends Menu{
         };
 
         System.out.println("Build Progress: " + getComponentCount() + "/8");
+        System.out.println( RENDER_LONG_BAR.getDecoration() );
+
         if (!currentBuildPrices.isEmpty()) {
             System.out.println("Current Total Build Price: $" + calculateCurrentTotalBuildPrice());
         }
-        System.out.println( RENDER_BAR.getDecoration() );
+        System.out.println( RENDER_LONG_BAR.getDecoration() );
 
     }
     protected void displayBuildCompleteMessage() {
-        System.out.println( RENDER_BAR.getDecoration());
         System.out.println("Build is complete! All 8 components have been selected. Please go to shopping cart to complete order.");
-        System.out.println( RENDER_BAR.getDecoration() );
+        System.out.println( RENDER_SHORT_BAR.getDecoration() );
     }
     private String calculateCurrentTotalBuildPrice() {
         Double total = 0.0;
@@ -116,6 +119,7 @@ public class MainMenu extends Menu{
         }
         return df.format(total);
     }
+
 
 //    Accessor Methods
     public SubmenuMap getSubmenuMap() { return submenuMap; }
@@ -130,4 +134,5 @@ public class MainMenu extends Menu{
     public void setCustomerInfo(String[] customerInfo) { this.customerInfo = customerInfo; }
     public int getComponentCount() { return componentCount; }
     public void setComponentCount( int componentCount ) { this.componentCount = componentCount; }
+
 }
