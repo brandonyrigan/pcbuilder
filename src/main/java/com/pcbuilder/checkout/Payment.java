@@ -5,12 +5,12 @@ package com.pcbuilder.checkout;
  */
 public class Payment {
 
-    int creditCarNumber;
-    int ccv;
+    Long creditCarNumber;
+    Integer ccv;
     String customerNameOnCard;
 
     public Payment(){}
-    public Payment(int creditCarNumber, int ccv, String customerNameOnCard) {
+    public Payment(Long creditCarNumber, Integer ccv, String customerNameOnCard) {
         this.creditCarNumber = creditCarNumber;
         this.ccv = ccv;
         this.customerNameOnCard = customerNameOnCard;

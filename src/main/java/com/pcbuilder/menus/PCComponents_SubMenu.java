@@ -34,8 +34,6 @@ public class PCComponents_SubMenu extends MainMenu {
     }
     private void runPCComponentsSubmenu(){
 
-//TODO[X]: keep customer in this menu until done selecting all components or return to main menu
-//TODO[ ] - Refactor multiple switch statements
         do {
             Session session = getSession();
             Map<String, Collection<Component>> fetchedInventoryMap = session.fetchMapOfInventory();
@@ -89,6 +87,7 @@ public class PCComponents_SubMenu extends MainMenu {
                     break;
             }
             renderCurrentSessionBuild();
+            System.out.println("Build Progress: " + getComponentCount() + "/8");
             renderSubmenuPCComponentsMenu();
         } while (getSelection() != 9);
 
@@ -98,9 +97,10 @@ public class PCComponents_SubMenu extends MainMenu {
         int selectionCounter = 1;
         String componentId = "";
         String componentName = "";
+        String componentPrice = "";
         String[] holdComponentNameAndId = new String[ targetCollection.size() +1 ];
 
-        System.out.println(RENDER_SHORT_BAR.getDecoration());
+        System.out.println(RENDER_LONG_BAR.getDecoration());
         Double[] holdComponentPrices = new Double[targetCollection.size() + 1];
         System.out.printf("%-5s | %-53s | %-10s | %-10s | %-20s ", "SELECT", collectionName , "PRICE", "RATING", "DESCRIPTION");
         System.out.println();
@@ -110,8 +110,9 @@ public class PCComponents_SubMenu extends MainMenu {
 
             componentId = component.getProductId().toString();
             componentName = component.getName();
+            componentPrice = component.getPrice().toString();
             holdComponentPrices[selectionCounter] = component.getPrice();
-            holdComponentNameAndId[ selectionCounter ] = componentName + "," + componentId  ;
+            holdComponentNameAndId[ selectionCounter ] = componentName + "," + componentId + "," + componentPrice  ;
 
             System.out.format("%6s | %-53s | %-10s | %-10s | %-20s",
                     selectionCounter, component.getName(), component.getPrice(),
@@ -123,7 +124,6 @@ public class PCComponents_SubMenu extends MainMenu {
 //
         String componentNameAndId = customerComponentSelection( collectionName, holdComponentPrices, holdComponentNameAndId );
 
-//      TODO[ ]- FIX: componentCount not being updated at ParentClass
         if (!session.getSessionBuild().containsKey(collectionName)) {
             componentCount++;
         }
@@ -143,9 +143,8 @@ public class PCComponents_SubMenu extends MainMenu {
 
             System.out.println( "You entered " + " ["+getSelection()+"]" + ", did we get that right? Yes/No" );
             updateConfirmSelection();
-//            String editChoice = getConfirmSelection().toUpperCase().substring(0);
             String editChoice = getConfirmSelection();
-            if( editChoice.equalsIgnoreCase("yes") ) chooseToEdit = false;
+            if( editChoice.equalsIgnoreCase("yes") || editChoice.equalsIgnoreCase("y") ) chooseToEdit = false;
         }
         while( chooseToEdit );
 

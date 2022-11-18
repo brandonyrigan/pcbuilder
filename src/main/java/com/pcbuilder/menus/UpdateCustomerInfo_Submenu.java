@@ -15,9 +15,6 @@ public class UpdateCustomerInfo_Submenu extends MainMenu {
     }
 
     private String[] processCustomerInformation(){
-//DONE[x]: allow user to go back and edit their entries
-//DONE[x]: allow user to exit the App
-//DONE[x]: refactor to use confirmSelection data field
 
         String[] customerInputValues = new String[3];
         String customerFirstName;
@@ -44,8 +41,8 @@ public class UpdateCustomerInfo_Submenu extends MainMenu {
                     "\n email: " + customerEmail +
                     "\ndid we get that right? Yes/No" );
             updateConfirmSelection();
-            String editChoice = getConfirmSelection().toUpperCase().substring(0);
-            if( editChoice.equals("Y") ) chooseToEdit = false;
+            String editChoice = getConfirmSelection();
+            if( editChoice.equalsIgnoreCase("y") || editChoice.equalsIgnoreCase("yes") ) chooseToEdit = false;
         }
         while( chooseToEdit );
 
