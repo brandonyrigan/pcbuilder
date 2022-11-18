@@ -13,10 +13,15 @@ public class Customer {
         setEmail(email);
     }
 
+    public void updateCustomerBasicInfo(String[] actualCustomerInfo) {
+        setFirstName( actualCustomerInfo[0] );
+        setLastName( actualCustomerInfo[1] );
+        setEmail( actualCustomerInfo[2] );
+    }
+
     public UUID getCustomerUUID() {
         return customerUUID;
     }
-
     public void setCustomerUUID() { this.customerUUID = UUID.randomUUID();}
     public String getFirstName() { return firstName;}
     public void setFirstName(String firstName) {
@@ -33,11 +38,5 @@ public class Customer {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void updateCustomerBasicInfo(String[] actualCustomerInfo) {
-        setFirstName( actualCustomerInfo[0] );
-        setLastName( actualCustomerInfo[1] );
-        setEmail( actualCustomerInfo[2] );
     }
 }

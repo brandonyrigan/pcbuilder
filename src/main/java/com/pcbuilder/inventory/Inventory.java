@@ -6,14 +6,6 @@ public final class Inventory {
 
     public static Map<String, Collection<Component>> mapOfInventory = new HashMap<>();
 
-    public static Collection< Component > fetchCategoryFromInventory(String targetCategory){
-//  TODO: use try catch block and optional
-        Collection<Component> targetList = mapOfInventory.get(targetCategory);
-        boolean foundTargetCategory = mapOfInventory.containsKey(targetCategory);
-
-        return ( foundTargetCategory )? targetList : null;
-    }
-
     private static final Collection<Component> cpuList = new ArrayList<>();
     static {
         cpuList.add(new CPU(UUID.randomUUID(), "Intel Core I9-13900K", "24-Core, 3.0 GHz, 125W, Intel UHD Graphics 770", 659.00, "*****", 20));

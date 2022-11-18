@@ -9,7 +9,6 @@ import java.util.*;
 
 public class MainMenu extends Menu{
 
-
     protected Session session;
     protected SubmenuMap submenuMap;
     protected String confirmSelection;
@@ -18,8 +17,6 @@ public class MainMenu extends Menu{
     protected String[] customerInfo;
     protected Map<String, Double> currentBuildPrices = new HashMap<>();
 
-
-    //TODO[ ] - Refactor: Constructor Injection > Setter Injection
     public MainMenu(){}
     public MainMenu( Session session, String... customerInfo ){
         setSession( session );
@@ -29,7 +26,6 @@ public class MainMenu extends Menu{
         setSubmenuMap( submenuMap ); // Reactor to use Constructor Injection
     }
 
-    //TODO[]- FIX: NullPointerException, need an Optional
     @Override
     public void renderOwnMenu() {
         createSubmenus();
@@ -68,7 +64,8 @@ public class MainMenu extends Menu{
     }
     protected void updateConfirmSelection(){
         Scanner scanner = new Scanner(System.in);
-        setConfirmSelection( scanner.nextLine() );
+        String userInput = scanner.nextLine();
+        setConfirmSelection( userInput );
     }
 
 
@@ -77,7 +74,6 @@ public class MainMenu extends Menu{
         Session session = getSession();
         Build build = session.composeBuild( session );
         session.addBuildToCart(build);
-        session.setSessionBuildPrice( currentBuildPrices );
     }
     protected void renderCurrentSessionBuild(){
         Session session = getSession();
@@ -87,9 +83,6 @@ public class MainMenu extends Menu{
         String[] componentInfo = new String[]{};
         System.out.println(  );
 
-        session.setSessionBuildPrice( currentBuildPrices );
-        System.out.println( getSession().getSessionBuildPrice() );
-
         System.out.println( "Current Build " );
         for( Map.Entry<String, String> entries : sessionBuild.entrySet() ){
             categoryName = entries.getKey();
@@ -98,7 +91,6 @@ public class MainMenu extends Menu{
             System.out.println("   "+ categoryName +": "+ componentName );
         };
 
-        System.out.println("Build Progress: " + getComponentCount() + "/8");
         System.out.println( RENDER_LONG_BAR.getDecoration() );
 
         if (!currentBuildPrices.isEmpty()) {
@@ -108,7 +100,8 @@ public class MainMenu extends Menu{
 
     }
     protected void displayBuildCompleteMessage() {
-        System.out.println("Build is complete! All 8 components have been selected. Please go to shopping cart to complete order.");
+        System.out.println( RENDER_SHORT_BAR.getDecoration() );
+        System.out.println("Build is complete! All 8 components have been selected. Please press [0] to go to shopping cart to add the build.");
         System.out.println( RENDER_SHORT_BAR.getDecoration() );
     }
     private String calculateCurrentTotalBuildPrice() {
@@ -119,7 +112,6 @@ public class MainMenu extends Menu{
         }
         return df.format(total);
     }
-
 
 //    Accessor Methods
     public SubmenuMap getSubmenuMap() { return submenuMap; }

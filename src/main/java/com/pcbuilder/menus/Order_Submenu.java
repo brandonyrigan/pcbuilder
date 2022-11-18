@@ -5,8 +5,6 @@ import com.pcbuilder.session.Session;
 
 import static com.pcbuilder.menus.DecorateEnum.*;
 
-//  TODO[ ] : process Shopping Cart details
-
 public class Order_Submenu extends MainMenu {
 
     Boolean hasConfirmedOrder;
@@ -27,22 +25,22 @@ public class Order_Submenu extends MainMenu {
         System.out.println( RENDER_SHORT_BAR.getDecoration() );
         System.out.println("View Order" );
         System.out.println("   Select from the options below");
-        System.out.println("   [1] Main Menu " + " [2] Confirm Order ");
+        renderOrderOptions();
     }
     private void runOrderWalkThrough(){
-//TODO[ ] : Refactor switch case
 
         createNewOrder();
 
         Order order = getSession().getOrder();
         order.printSessionOrder();
-        updateUserSelection();
+        renderOrderOptions();
         do{
-
+            updateUserSelection();
             switch ( getSelection() ){
                 case 1: break;
                 case 2:
                     processCustomerOrder();
+                    renderOrderOptions();
                     break;
                 default: break;
             }
@@ -57,7 +55,6 @@ public class Order_Submenu extends MainMenu {
         System.out.println( "Validating order details..." );
         System.out.println( "Order Confirmation  complete...Thank you." );
         setHasConfirmedOrder(true);
-        updateUserSelection();
     }
     private void createNewOrder(){
         Session session = getSession();
@@ -65,10 +62,12 @@ public class Order_Submenu extends MainMenu {
 
         System.out.println( " New Order Created, Thank You. " );
         setHasConfirmedOrder(true);
-        updateUserSelection();
     };
+    private void renderOrderOptions() {
+        System.out.println("   [1] Main Menu " + " [2] Confirm Order ");
+    }
+
 
     public Boolean getHasConfirmedOrder() { return hasConfirmedOrder; }
-
     public void setHasConfirmedOrder(Boolean hasConfirmedOrder) { this.hasConfirmedOrder = hasConfirmedOrder; }
 }

@@ -4,7 +4,6 @@ import com.pcbuilder.session.Session;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO[ ] - should this be an interface implementation instead? only used to create NEW submenus
 public class SubmenuMap {
 
     private Session session;

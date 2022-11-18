@@ -24,7 +24,7 @@ public class Checkout_Submenu extends MainMenu {
         System.out.println( RENDER_BANNER_SUBMENU_PURCHASE.getDecoration() );
         System.out.println("CheckOut Menu" );
         System.out.println("   Select from the options below");
-        System.out.println("   [1] Main Menu " + " [2] Add Payment" + " [3] Update Payment" + " [4] Make Payment " );
+        renderCheckoutOptions();
     }
     private void runOrderSubmenu(){
 
@@ -32,21 +32,22 @@ public class Checkout_Submenu extends MainMenu {
 
         Checkout checkout = getCheckout();
         checkout.displayOrderDetails();
-
+        renderCheckoutOptions();
         do{
             updateUserSelection();
             switch ( getSelection() ){
                 case 1: break;
                 case 2:
-                    System.out.println("dong");
                     addPaymentMethod();
+                    renderCheckoutOptions();
                     break;
                 case 3:
-                    System.out.println("ding");
                     updatePaymentInfo();
+                    renderCheckoutOptions();
                     break;
                 case 4:
                     makePayment();
+                    renderCheckoutOptions();
                     break;
                 default: break;
             }
@@ -56,14 +57,13 @@ public class Checkout_Submenu extends MainMenu {
 
     private void addPaymentMethod(){
         addPaymentMethodToSessionOrder();
-//        updateUserSelection();
     }
     private void addPaymentMethodToSessionOrder(){
         Checkout checkout = getCheckout();
 
         String[] ccInfo = customerCreditCardInfo().split(",");
         String name = ccInfo[0];
-        Integer ccNumber = Integer.parseInt(ccInfo[1]);
+        Long ccNumber = Long.parseLong(ccInfo[1]);
         Integer ccCCV = Integer.parseInt(ccInfo[2]);
 
         Payment newPayment = new Payment( ccNumber, ccCCV, name );
@@ -71,8 +71,6 @@ public class Checkout_Submenu extends MainMenu {
 
         System.out.println( " Your Card Info: " );
         checkout.displayPaymentInfo();
-        System.out.println( " after displayinfo " );
-//        updateUserSelection();
     }
 
     private void updatePaymentInfo(){
@@ -80,7 +78,7 @@ public class Checkout_Submenu extends MainMenu {
 
         String[] ccInfo = customerCreditCardInfo().split(",");
         String name = ccInfo[0];
-        Integer ccNumber = Integer.parseInt(ccInfo[1]);
+        Long ccNumber = Long.parseLong(ccInfo[1]);
         Integer ccCCV = Integer.parseInt(ccInfo[2]);
 
         Payment newPayment = new Payment( ccNumber, ccCCV, name );
@@ -118,6 +116,10 @@ public class Checkout_Submenu extends MainMenu {
     private void createNewCheckout(){
         Checkout newCheckoutSession = new Checkout( session.getOrder(), new Payment() );
         setCheckout( newCheckoutSession );
+    }
+
+    private void renderCheckoutOptions() {
+        System.out.println("   [1] Main Menu " + " [2] Add Payment" + " [3] Update Payment" + " [4] Make Payment " );
     }
 
 

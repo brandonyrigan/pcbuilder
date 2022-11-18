@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.pcbuilder.menus.DecorateEnum.RENDER_SHORT_BAR;
+
 public class Session {
 
     public Build finalBuild;
@@ -22,7 +24,6 @@ public class Session {
     private Checkout checkout;
     private LocalDate sessionStart, sessionEnd;
     public Map<String,String> sessionBuild;
-    public Map<String,Double> sessionBuildPrice;
 
     private Order order;
     private ShoppingCart shoppingCart;
@@ -33,7 +34,6 @@ public class Session {
         setCustomer( customerInfo );
         setCheckout( new Checkout() );
         setSessionBuild( new HashMap<>() );
-        setSessionBuildPrice(new HashMap<>());
         setShoppingCart( createNewShoppingCart() );
         setOrder( new Order() );
         setUuid();
@@ -44,9 +44,12 @@ public class Session {
 
 //  Business Logic
     public void addBuildToCart(Build finalBuild) {
-    shoppingCart.addToCart(finalBuild);
-    System.out.println("Build added to cart");
-}
+        shoppingCart.addToCart(finalBuild);
+        System.out.println( );
+        System.out.println( RENDER_SHORT_BAR.getDecoration() );
+        System.out.println("Build added to cart");
+        System.out.println( RENDER_SHORT_BAR.getDecoration() );
+    }
     public void createNewCheckoutSession(){
         Order order = getOrder();
 
@@ -65,10 +68,7 @@ public class Session {
         Customer customerSession = getCustomer();
         ShoppingCart sessionShoppingCart = getShoppingCart();
         Map<String, String> sessionBuild = getSessionBuild();
-        Map<String, Double> sessionBuildPrice = getSessionBuildPrice();
-        System.out.println( "@Session " + getSessionBuildPrice());
-        Order newOrder = new Order( customerSession, sessionShoppingCart, sessionBuild, sessionBuildPrice );
-
+        Order newOrder = new Order( customerSession, sessionShoppingCart, sessionBuild );
         setOrder(newOrder);
     }
     public ShoppingCart createNewShoppingCart(){
@@ -117,6 +117,4 @@ public class Session {
     public Checkout getCheckout() { return checkout; }
     public void setCheckout(Checkout checkout) { this.checkout = checkout; }
 
-    public Map<String, Double> getSessionBuildPrice() { return sessionBuildPrice; }
-    public void setSessionBuildPrice(Map<String, Double> sessionBuildPrice) { this.sessionBuildPrice = sessionBuildPrice; }
 }

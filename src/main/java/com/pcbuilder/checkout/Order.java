@@ -2,19 +2,18 @@ package com.pcbuilder.checkout;
 
 import com.pcbuilder.customer.Customer;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.pcbuilder.menus.DecorateEnum.RENDER_TXT_SPACE;
-import static com.pcbuilder.menus.DecorateEnum.RENDER_TXT_SPACEx2;
+import static com.pcbuilder.menus.DecorateEnum.*;
 
 // Store All Session Details
 
 public class Order {
-// TODO[ ] - get totals and add to order
     Customer customer;
     LocalDateTime dateCreatedOrder;
     private UUID orderId;
@@ -23,13 +22,12 @@ public class Order {
     ShoppingCart shoppingCart;
 
     public Order(){}
-    public Order( Customer customer, ShoppingCart shoppingCart, Map<String, String> sessionBuild, Map<String, Double> currentBuildPrices){
+    public Order( Customer customer, ShoppingCart shoppingCart, Map<String, String> sessionBuild){
         setOrderId();
         setDateCreatedOrder();
         setCustomer( customer );
         setShoppingCart( shoppingCart );
         setSessionBuild( sessionBuild );
-        setCurrentBuildPrice( currentBuildPrices );
     }
 
 //  Business Logic
@@ -41,11 +39,8 @@ public class Order {
         String optionalCustomerId = Optional.of( getCustomer().getCustomerUUID().toString() ).orElse( "no customer uuid" );
         Integer optionalShoppingCartSize = Optional.of( getShoppingCart().getCartItems().size() ).orElse(0);
         String optionalOrderId = Optional.of( getOrderId().toString() ).orElse("no order uuid");
-        Map<String, String> optionalSessionBuild = Optional.of( getSessionBuild() ).orElse( new HashMap<>() );
 
-        Map<String, Double> optionalSubTotals = Optional.of( getCurrentBuildPrice() ).orElse( new HashMap<>() );
-        System.out.println( getCurrentBuildPrice() );
-        Double totals = calcTotalFromSubTotals( getCurrentBuildPrice() );
+        Double totals = calcTotalFromSubTotals( getSessionBuild() );
 
         System.out.println();
         System.out.println(RENDER_TXT_SPACE.getDecoration()+"Customer Details: " + optionalLastName + "," + optionalFirstName );
@@ -53,41 +48,44 @@ public class Order {
         System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"customer email: " + optionalEmail );
         System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"order id: " + optionalOrderId) ;
 
-        System.out.println(RENDER_TXT_SPACE.getDecoration()+"Session Build :  ");
-        renderSessionBuild(optionalSessionBuild);
 
         System.out.println(RENDER_TXT_SPACE.getDecoration()+"Shopping Cart Details");
         System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Shopping Cart : [" + optionalShoppingCartSize + "]" );
 
-        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"SubTotal: " + optionalSubTotals );
-        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Total: " + totals);
-
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"SubTotal: " );
+        renderSubTotal(createShoppingCartSubTotal(getSessionBuild()));
+        System.out.println( RENDER_SHORT_BAR.getDecoration());
+        DecimalFormat df = new DecimalFormat("#.##");
+        System.out.println(RENDER_TXT_SPACEx2.getDecoration()+"Total: $" + df.format(totals));
+        System.out.println( RENDER_SHORT_BAR.getDecoration());
     }
 
-    private Double calcTotalFromSubTotals( Map<String, Double> subTotals ){
+    private Double calcTotalFromSubTotals( Map<String, String> sessionBuild ){
         Double totals = 0.0;
-        System.out.println( subTotals );
-        for (Map.Entry<String, Double> entry : subTotals.entrySet()) {
-            System.out.println(entry);
-            totals += entry.getValue();
-        }
-                    System.out.println( "totals from for loop" + totals );
+        String[] componentInfo = new String[]{};
 
-//        Optional<Map<String, Double>> optionalSubTotals = Optional.ofNullable(subTotals);
+        for( Map.Entry<String, String> entries : sessionBuild.entrySet() ){
+            componentInfo = entries.getValue().split(",");
+            totals += Double.parseDouble(componentInfo[2]);
+        };
 
-//        if ( optionalSubTotals.isPresent() ) {
-//
-//            Map<String, Double> stringDoubleMap = optionalSubTotals.get();
-//            for (Map.Entry<String, Double> entry : stringDoubleMap.entrySet()) {
-//                totals += entry.getValue();
-//            }
-//        }
         return totals;
 
     }
-    private void renderSessionBuild(Map<String, String> optionalSessionBuild){
-        for (Map.Entry<String, String> entry : optionalSessionBuild.entrySet()){
-            System.out.println(RENDER_TXT_SPACEx2.getDecoration()+ "["+ entry.getKey()+ "] "+": "+ entry.getValue()  );
+    private Map<String, Double> createShoppingCartSubTotal(Map<String, String> sessionBuild) {
+        Map<String, Double> subTotals = new HashMap<>();
+        String[] componentInfo = new String[]{};
+
+        for( Map.Entry<String, String> entries : sessionBuild.entrySet() ){
+            componentInfo = entries.getValue().split(",");
+            subTotals.put(componentInfo[0], Double.parseDouble(componentInfo[2]));
+        };
+        return subTotals;
+    }
+
+    private void renderSubTotal(Map<String, Double> optionalSubTotals) {
+        for (Map.Entry<String, Double> entry : optionalSubTotals.entrySet()) {
+            System.out.println(RENDER_TXT_SPACEx2.getDecoration()+ "[" + entry.getKey() + "]" + ": $" + entry.getValue());
         }
     }
 
