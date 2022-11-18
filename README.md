@@ -9,16 +9,16 @@ inventory of PC Components.
 
 #### Minimym Viable Product (MVP)
 
-As a guest customer I would like to navigate to the Main Menu from any Submen.
-As a guest customer I want to be able to see my current build progress and current price of each component.
-As a guest customer I want to be able to update my customer information.
-As a guest customer I want to be able to add my build to my shopping cart.
-As a guest customer I want to be able to view the items in my shopping cart.
-As a guest customer I want to be able to remove a build from my shopping cart.
-As a Customer I would like to be able to view and confirm my Order details in my current Session
-As a guest Customer I would like to exit my current Session from the Main Menu
-As a guest Customer I would like to add and update Payment Information
-As a guest Customer I would like to navigate to a Submenu where I can update my previous name and email
+- As a guest customer I would like to navigate to the Main Menu from any Submen.
+- As a guest customer I want to be able to see my current build progress and current price of each component.
+- As a guest customer I want to be able to update my customer information.
+- As a guest customer I want to be able to add my build to my shopping cart.
+- As a guest customer I want to be able to view the items in my shopping cart.
+- As a guest customer I want to be able to remove a build from my shopping cart.
+- As a Customer I would like to be able to view and confirm my Order details in my current Session
+- As a guest Customer I would like to exit my current Session from the Main Menu
+- As a guest Customer I would like to add and update Payment Information
+- As a guest Customer I would like to navigate to a Submenu where I can update my previous name and email
 
 #### Types of Customer
 - Guest Customer - can only initiate a session
