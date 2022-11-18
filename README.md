@@ -8,15 +8,17 @@ inventory of PC Components.
 ### User Story
 
 #### Minimym Viable Product (MVP)
-    - as a guest cutomer I should be able to input my information when promted
-    - as a guest cutomer I would like to be prompted during my shopping experience
-    - as a guest cutomer I would like to be displayed my current selections and current total price
 
-    - as a guest cutomer I would like select a component from a live inventory and be specs so I can 
-      decide which component to add to my pc build
-    - as a guest cutomer I would like to be informed of my progress and when my build is complete
-
-#### Stretch Goals
+As a guest customer I would like to navigate to the Main Menu from any Submen.
+As a guest customer I want to be able to see my current build progress and current price of each component.
+As a guest customer I want to be able to update my customer information.
+As a guest customer I want to be able to add my build to my shopping cart.
+As a guest customer I want to be able to view the items in my shopping cart.
+As a guest customer I want to be able to remove a build from my shopping cart.
+As a Customer I would like to be able to view and confirm my Order details in my current Session
+As a guest Customer I would like to exit my current Session from the Main Menu
+As a guest Customer I would like to add and update Payment Information
+As a guest Customer I would like to navigate to a Submenu where I can update my previous name and email
 
 #### Types of Customer
 - Guest Customer - can only initiate a session
@@ -26,9 +28,10 @@ inventory of PC Components.
     - session id (uuid)
 - Registered Customer
 #### Shopping Cart Feature
+    - view
     - edit/update
-    - clear/trash
-    - save (?)
+    - clear
+    - save
 #### Stretch Goals
 
 - Pre-built PC
@@ -36,11 +39,10 @@ inventory of PC Components.
     - Business
     - Designer
     - HighEnd
-
+- Name the PC Build
+- Persist Inventory and User in DB
 - User Class
-    - ( in - memory ) users
-    - name, email, phone, uuid, order id
-
+    - have different types of customers
 
 ### PC Build 
 
@@ -96,3 +98,9 @@ inventory of PC Components.
             STEP 6 : PAYMENT
                 - prompt customer to select payment type
                     - crypto, credit/debit, paypal, IOU...
+
+### PC Builder MVP UML
+
+![mpv UML]( PCBuilderMVPUML.jpeg )
+
+### PC Builder Slide Show
