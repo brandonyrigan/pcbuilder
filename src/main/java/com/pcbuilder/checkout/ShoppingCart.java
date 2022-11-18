@@ -34,4 +34,22 @@ public class ShoppingCart {
     public Map<Integer, Build> getCartItems() {
         return cartItems;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ShoppingCart that = (ShoppingCart) o;
+
+        if (buildCount != that.buildCount) return false;
+        return cartItems != null ? cartItems.equals(that.cartItems) : that.cartItems == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = cartItems != null ? cartItems.hashCode() : 0;
+        result = 31 * result + buildCount;
+        return result;
+    }
 }

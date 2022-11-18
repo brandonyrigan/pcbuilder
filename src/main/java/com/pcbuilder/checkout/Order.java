@@ -60,7 +60,7 @@ public class Order {
         System.out.println( RENDER_SHORT_BAR.getDecoration());
     }
 
-    private Double calcTotalFromSubTotals( Map<String, String> sessionBuild ){
+    public Double calcTotalFromSubTotals( Map<String, String> sessionBuild ){
         Double totals = 0.0;
         String[] componentInfo = new String[]{};
 
@@ -72,7 +72,7 @@ public class Order {
         return totals;
 
     }
-    private Map<String, Double> createShoppingCartSubTotal(Map<String, String> sessionBuild) {
+    public Map<String, Double> createShoppingCartSubTotal(Map<String, String> sessionBuild) {
         Map<String, Double> subTotals = new HashMap<>();
         String[] componentInfo = new String[]{};
 
